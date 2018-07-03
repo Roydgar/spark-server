@@ -7,11 +7,12 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(exclude = "password")
 @Builder
 @Entity
 @Table(name = "client")
@@ -45,5 +46,8 @@ public class Client {
 
     @NotNull
     private String address;
+
+    @Transient
+    private List<WorkTime> workDays;
 
 }
