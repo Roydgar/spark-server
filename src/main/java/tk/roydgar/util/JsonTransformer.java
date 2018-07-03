@@ -1,15 +1,17 @@
 package tk.roydgar.util;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import spark.ResponseTransformer;
 
 public class JsonTransformer implements ResponseTransformer {
 
-    private Gson gson = new Gson();
+    private ObjectMapper mapper = new ObjectMapper();
 
     @Override
+    @SneakyThrows
     public String render(Object model) {
-        return gson.toJson(model);
+        return mapper.writeValueAsString(model);
     }
 
 }
