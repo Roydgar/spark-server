@@ -21,6 +21,10 @@ public class ClientService {
 
     public Client findByName(String name) {
         Client client = clientRepository.findByName(name);
+        if (client == null) {
+            return null;
+        }
+
         client.setWorkDays(workTimeRepository.findByClientId(client.getId()));
         return client;
     }

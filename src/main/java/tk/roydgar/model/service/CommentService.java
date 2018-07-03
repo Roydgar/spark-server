@@ -32,10 +32,11 @@ public class CommentService {
 
         comment.setUsefulness(0);
         comment.setTime(Utils.getLocalDateTimeInUTC());
-        
+
         return clientRepository.findById(id).map(client -> {
             comment.setClient(client);
             return commentRepository.save(comment);
         }).orElse(null);
     }
+
 }
