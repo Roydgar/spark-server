@@ -6,5 +6,5 @@ import tk.roydgar.model.entity.News;
 import java.util.List;
 
 public interface NewsRepository extends CrudRepository<News, Long> {
-    List<News> findByClientId(Long client_client_id);
+    News findByClientId(Long client_client_id);
 }

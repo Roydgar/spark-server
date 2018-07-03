@@ -19,16 +19,10 @@ public class ClientService {
     private ClientRepository clientRepository;
     private WorkTimeRepository workTimeRepository;
 
-    public Client save(Client client) {
-        client.setRegistrationDate(ZonedDateTime.now().withZoneSameInstant(ZoneId.of("GMT"))
-                .toLocalDateTime());
-        return clientRepository.save(client);
-    }
-
-    public Iterable<Client> findAll() {
-        Iterable<Client> clientList = clientRepository.findAll();
-        clientList.forEach(client -> client.setWorkDays(workTimeRepository.findByClientId(client.getId())));
-        return clientList;
+    public Client findByName(String name) {
+        Client client = clientRepository.findByName(name);
+        client.setWorkDays(workTimeRepository.findByClientId(client.getId()));
+        return client;
     }
 
 }
