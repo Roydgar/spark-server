@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import spark.template.velocity.VelocityTemplateEngine;
 import tk.roydgar.model.entity.Comment;
+import tk.roydgar.model.service.AppointmentService;
 import tk.roydgar.model.service.ClientService;
 import tk.roydgar.model.service.CommentService;
 import tk.roydgar.model.service.NewsService;
@@ -26,6 +27,7 @@ public class WebController {
     private ClientService clientService;
     private NewsService newsService;
     private CommentService commentService;
+    private AppointmentService appointmentService;
     private VelocityTemplateEngine velocityTemplateEngine;
     private JsonTransformer jsonTransformer;
 
@@ -56,6 +58,8 @@ public class WebController {
                                 , request.params(":clientId"))
                 , jsonTransformer);
 
+        get("/appointments", (request, response) ->
+            appointmentService.findByCurrentDate(), jsonTransformer);
     }
 
 }
