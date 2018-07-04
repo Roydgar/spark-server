@@ -22,38 +22,39 @@ import static tk.roydgar.util.ModelAndViewUtil.createModelAndView;
 public class WebController {
 
     private IndexPageController indexPageController;
-    ClientRegistrationController clientRegistrationController;
+    private ClientRegistrationController clientRegistrationController;
     private ClientService clientService;
     private NewsService newsService;
     private CommentService commentService;
+    private VelocityTemplateEngine velocityTemplateEngine;
+    private JsonTransformer jsonTransformer;
 
     public void setupRoutes() {
 
-        get("/", indexPageController.handle, new VelocityTemplateEngine());
+        get("/", indexPageController.handle, velocityTemplateEngine);
 
         get("/registration", (request, response) ->
                         createModelAndView(TemplatePaths.CLIENT_REGISTRATION_FROM),
-                        new VelocityTemplateEngine());
+                        velocityTemplateEngine);
 
-        post("/registration", clientRegistrationController.handle, new VelocityTemplateEngine());
+        post("/registration", clientRegistrationController.handle, velocityTemplateEngine);
 
         get("/client/:name", (request, response) ->
                         clientService.findByName(request.params(":name"))
-                , new JsonTransformer());
+                , jsonTransformer);
 
         get("/news/:clientId", (request, response) ->
-                        newsService.findByClientId(request.params(":clientId"))
-                , new JsonTransformer());
+                        newsService.findByClientId(request.params(":clientId")), jsonTransformer);
 
         get("/comments/:clientId", (request, response) ->
                         commentService.findByClientId(request.params(":clientId"))
-                , new JsonTransformer());
+                , jsonTransformer);
 
         post("/addComment/:clientId", (request, response) ->
                         commentService.save(
                                 new ObjectMapper().readValue(request.body(), Comment.class)
                                 , request.params(":clientId"))
-                , new JsonTransformer());
+                , jsonTransformer);
 
     }
 
