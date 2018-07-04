@@ -1,12 +1,8 @@
 package tk.roydgar.controller;
 
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.TemplateViewRoute;
@@ -16,9 +12,6 @@ import tk.roydgar.util.ModelAndViewUtil;
 import tk.roydgar.util.ValidatorUtil;
 import tk.roydgar.util.constants.ParameterNames;
 import tk.roydgar.util.constants.TemplatePaths;
-
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 @Controller
