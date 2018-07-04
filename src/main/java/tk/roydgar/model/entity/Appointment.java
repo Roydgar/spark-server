@@ -37,4 +37,8 @@ public class Appointment {
     @Column(name = "service_duration_in_minutes", nullable = false)
     private Integer serviceDurationInMinutes;
 
+    @OneToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
 }
