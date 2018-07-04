@@ -13,7 +13,7 @@ public class ModelAndViewUtil {
 
     public static ModelAndView createModelAndView(String path) {
         Map<String, String> model = new HashMap<>();
-        model.put(ParameterNames.TEMPLATE, TemplatePaths.LOGIN_FORM);
+        model.put(ParameterNames.TEMPLATE, path);
 
         return new ModelAndView(model, TemplatePaths.LAYOUT);
     }
@@ -21,7 +21,7 @@ public class ModelAndViewUtil {
     public static ModelAndView createModelAndView(String path, String error) {
         Map<String, String> model = new HashMap<>();
         model.put(ParameterNames.ERROR_MESSAGE, error);
-        model.put(ParameterNames.TEMPLATE, TemplatePaths.LOGIN_FORM);
+        model.put(ParameterNames.TEMPLATE, path);
 
         return new ModelAndView(model, TemplatePaths.LAYOUT);
     }
