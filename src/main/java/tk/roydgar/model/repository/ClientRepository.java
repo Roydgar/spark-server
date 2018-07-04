@@ -7,4 +7,5 @@ import tk.roydgar.model.entity.Client;
 @Repository
 public interface ClientRepository extends CrudRepository<Client, Long> {
     Client findByName(String name);
+    Client findByLogin(String login);
 }

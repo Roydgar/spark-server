@@ -7,6 +7,8 @@ import tk.roydgar.model.entity.Client;
 import tk.roydgar.model.entity.WorkTime;
 import tk.roydgar.model.repository.ClientRepository;
 import tk.roydgar.model.repository.WorkTimeRepository;
+import tk.roydgar.util.PasswordHasherUtil;
+import tk.roydgar.util.Utils;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -27,6 +29,30 @@ public class ClientService {
 
         client.setWorkDays(workTimeRepository.findByClientId(client.getId()));
         return client;
+    }
+
+    public Client login(String login, String password) {
+        Client client = clientRepository.findByLogin(login);
+        if (client == null) {
+            return null;
+        }
+
+        if (!PasswordHasherUtil.checkPassword(password, client.getPassword())) {
+            return null;
+        }
+
+        return client;
+    }
+
+    public Client save(Client client) {
+        if (client == null) {
+            return null;
+        }
+
+        client.setPassword(PasswordHasherUtil.hashPassword(client.getPassword()));
+        client.setRegistrationDate(Utils.getLocalDateTimeInUTC());
+
+        return clientRepository.save(client);
     }
 
 }

@@ -7,6 +7,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -32,6 +33,7 @@ public class Comment {
     @NotNull
     @Column(nullable = false)
     @Max(5)
+    @Min(0)
     private Integer mark;
 
     @NotNull
