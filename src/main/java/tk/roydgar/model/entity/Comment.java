@@ -6,7 +6,9 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Data
@@ -18,17 +20,22 @@ import java.time.LocalDateTime;
 public class Comment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
-    private Integer id;
+    private Long id;
 
     @NotNull
+    @Column(nullable = false)
+    @Lob
     private String text;
 
     @NotNull
+    @Column(nullable = false)
+    @Max(5)
     private Integer mark;
 
     @NotNull
+    @Column(nullable = false)
     private Integer usefulness;
 
     @NotNull

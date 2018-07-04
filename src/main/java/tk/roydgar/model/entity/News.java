@@ -18,18 +18,21 @@ import java.time.LocalDateTime;
 public class News {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "news_id")
-    private Integer id;
+    private Long id;
 
     @NotNull
+    @Column(nullable = false, length = 120)
     private String name;
 
     @NotNull
+    @Column(nullable = false)
+    @Lob
     private String text;
 
     @NotNull
-    @Column(name = "picture_url")
+    @Column(name = "picture_url", nullable = false)
     private String pictureURL;
 
     @NotNull

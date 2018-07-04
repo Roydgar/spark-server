@@ -4,11 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.List;
 
 @Data
@@ -20,39 +23,27 @@ import java.util.List;
 public class WorkTime {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "work_time_id")
-    private Integer id;
+    private Long id;
 
     @NotNull
-    @Size(max = 2)
-    @Column(name = "from_day",  nullable = false)
-    private String fromDay;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "from_day",  nullable = false, length = 12)
+    private DayOfWeek fromDay;
 
     @NotNull
-    @Size(max = 2)
-    @Column(name = "from_hour",  nullable = false)
-    private String fromHour;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "to_day",  nullable = false, length = 12)
+    private DayOfWeek toDay;
 
     @NotNull
-    @Size(max = 2)
-    @Column(name = "from_minute",  nullable = false)
-    private String fromMinute;
+    @Column(name = "from_time",  nullable = false)
+    private LocalTime fromTime;
 
     @NotNull
-    @Size(max = 2)
-    @Column(name = "to_day",  nullable = false)
-    private String toDay;
-
-    @NotNull
-    @Size(max = 2)
-    @Column(name = "to_hour",  nullable = false)
-    private String toHour;
-
-    @NotNull
-    @Size(max = 2)
-    @Column(name = "to_minute",  nullable = false)
-    private String toMinute;
+    @Column(name = "to_time",  nullable = false)
+    private LocalTime toTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", nullable = false)

@@ -4,8 +4,10 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,25 +21,30 @@ import java.util.List;
 public class Client {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "client_id")
     private Long id;
 
     @NotNull
+    @Column(nullable = false)
     @JsonIgnore
     private String login;
 
-    @JsonIgnore
     @NotNull
+    @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
     @NotNull
+    @Column(nullable = false, length = 80)
     private String name;
 
     @NotNull
+    @Column(nullable = false, length = 30)
     private String phone;
 
     @NotNull
+    @Column(nullable = false)
     private String email;
 
     @NotNull
@@ -45,6 +52,7 @@ public class Client {
     private LocalDateTime registrationDate;
 
     @NotNull
+    @Column(nullable = false)
     private String address;
 
     @Transient
