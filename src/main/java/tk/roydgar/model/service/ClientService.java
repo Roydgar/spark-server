@@ -15,16 +15,9 @@ import tk.roydgar.util.Utils;
 public class ClientService {
 
     private ClientRepository clientRepository;
-    private WorkTimeRepository workTimeRepository;
 
     public Client findByName(String name) {
-        Client client = clientRepository.findByName(name);
-        if (client == null) {
-            return null;
-        }
-
-        client.setWorkDays(workTimeRepository.findAllByClientId(client.getId()));
-        return client;
+        return clientRepository.findByName(name);
     }
 
     public Client login(String login, String password) {

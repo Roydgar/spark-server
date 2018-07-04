@@ -53,7 +53,7 @@ public class Client {
     @Column(nullable = false)
     private String address;
 
-    @Transient
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "client", cascade = CascadeType.ALL)
     private List<WorkTime> workDays;
 
 }

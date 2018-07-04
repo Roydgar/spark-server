@@ -10,7 +10,8 @@ import javax.validation.constraints.NotNull;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
-@Data
+@Getter @Setter
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -41,9 +42,8 @@ public class WorkTime {
     @Column(name = "to_time",  nullable = false)
     private LocalTime toTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(cascade= CascadeType.ALL)
+    @JoinColumn(name = "client_id")
     @JsonIgnore
     private Client client;
 
