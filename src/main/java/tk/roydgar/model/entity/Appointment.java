@@ -1,10 +1,7 @@
 package tk.roydgar.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,7 +9,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 
-@Data
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -37,7 +34,8 @@ public class Appointment {
     @Column(name = "service_duration_in_minutes", nullable = false)
     private Integer serviceDurationInMinutes;
 
-    @OneToOne
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.roydgar.model.entity.Appointment;
 import tk.roydgar.model.repository.AppointmentRepository;
+import tk.roydgar.util.Utils;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,7 +17,11 @@ public class AppointmentService {
     private AppointmentRepository appointmentRepository;
 
     public Iterable<Appointment> findByCurrentDate() {
-        return appointmentRepository.findAllByDate(LocalDate.now());
+        return appointmentRepository.findAllByDate(Utils.getLocalDateInUTC());
+    }
+
+    public Iterable<Appointment> findAll() {
+        return appointmentRepository.findAll();
     }
 
 }

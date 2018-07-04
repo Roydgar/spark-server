@@ -23,7 +23,6 @@ import static tk.roydgar.util.ModelAndViewUtil.createModelAndView;
 public class WebController {
 
     private IndexPageController indexPageController;
-    private ClientRegistrationController clientRegistrationController;
     private ClientService clientService;
     private NewsService newsService;
     private CommentService commentService;
@@ -35,11 +34,6 @@ public class WebController {
 
         get("/", indexPageController.handle, velocityTemplateEngine);
 
-        get("/registration", (request, response) ->
-                        createModelAndView(TemplatePaths.CLIENT_REGISTRATION_FROM),
-                        velocityTemplateEngine);
-
-        post("/registration", clientRegistrationController.handle, velocityTemplateEngine);
 
         get("/client/:name", (request, response) ->
                         clientService.findByName(request.params(":name"))
@@ -59,7 +53,7 @@ public class WebController {
                 , jsonTransformer);
 
         get("/appointments", (request, response) ->
-            appointmentService.findByCurrentDate(), jsonTransformer);
+            appointmentService.findAll(), jsonTransformer);
     }
 
 }
