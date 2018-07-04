@@ -4,15 +4,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.roydgar.model.entity.Client;
-import tk.roydgar.model.entity.WorkTime;
 import tk.roydgar.model.repository.ClientRepository;
 import tk.roydgar.model.repository.WorkTimeRepository;
 import tk.roydgar.util.PasswordHasherUtil;
 import tk.roydgar.util.Utils;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.List;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))

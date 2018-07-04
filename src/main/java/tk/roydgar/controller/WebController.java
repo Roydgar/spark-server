@@ -5,14 +5,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import spark.template.velocity.VelocityTemplateEngine;
-import tk.roydgar.model.entity.Client;
 import tk.roydgar.model.entity.Comment;
 import tk.roydgar.model.service.ClientService;
 import tk.roydgar.model.service.CommentService;
 import tk.roydgar.model.service.NewsService;
 import tk.roydgar.util.JsonTransformer;
-
-import java.time.LocalDateTime;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
