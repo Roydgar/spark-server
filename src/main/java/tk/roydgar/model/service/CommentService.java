@@ -8,6 +8,8 @@ import tk.roydgar.model.repository.ClientRepository;
 import tk.roydgar.model.repository.CommentRepository;
 import tk.roydgar.util.Utils;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class CommentService {
@@ -15,13 +17,13 @@ public class CommentService {
     private CommentRepository commentRepository;
     private ClientRepository clientRepository;
 
-    public Comment findByClientId(String clientId) {
+    public List<Comment> findByClientId(String clientId) {
         Long id = Utils.parseId(clientId);
         if (id == null) {
             return null;
         }
 
-        return commentRepository.findByClientId(id);
+        return commentRepository.findAllByClientId(id);
     }
 
     public Comment save(Comment comment, String clientId) {

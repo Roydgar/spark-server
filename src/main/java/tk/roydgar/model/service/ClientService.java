@@ -27,7 +27,7 @@ public class ClientService {
             return null;
         }
 
-        client.setWorkDays(workTimeRepository.findByClientId(client.getId()));
+        client.setWorkDays(workTimeRepository.findAllByClientId(client.getId()));
         return client;
     }
 
@@ -49,10 +49,18 @@ public class ClientService {
             return null;
         }
 
+        if (clientWithGivenLoginExists(client.getLogin())) {
+            return null;
+        }
+
         client.setPassword(PasswordHasherUtil.hashPassword(client.getPassword()));
         client.setRegistrationDate(Utils.getLocalDateTimeInUTC());
 
         return clientRepository.save(client);
+    }
+
+    private boolean clientWithGivenLoginExists(String login) {
+        return clientRepository.findByLogin(login) != null;
     }
 
 }

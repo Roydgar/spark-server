@@ -26,7 +26,7 @@ public class Client {
     private Long id;
 
     @NotNull
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     @JsonIgnore
     private String login;
 
