@@ -2,9 +2,6 @@ package tk.roydgar.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -23,6 +20,9 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
     private Long id;
+
+    @Column(name = "parent_id")
+    private Long parentId = 0L;
 
     @NotNull
     @Column(nullable = false)
@@ -43,10 +43,8 @@ public class Comment {
     @Column(name = "time", nullable = false, updatable = false)
     private LocalDateTime time;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Client client;
 
