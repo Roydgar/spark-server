@@ -1,5 +1,6 @@
 package tk.roydgar.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -23,17 +24,14 @@ public class Appointment {
     @Column(name = "time", nullable = false, updatable = false)
     private LocalDateTime time;
 
-    @NotNull
-    @Column(name = "service_name", nullable = false, unique = true)
-    private String serviceName;
-
-    @NotNull
-    @Column(name = "service_duration_in_minutes", nullable = false)
-    private Integer serviceDurationInMinutes;
-
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "service_id")
+    @JsonProperty("service")
+    private Procedure procedure;
+
 
 }

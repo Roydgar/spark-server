@@ -5,8 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.roydgar.model.entity.Client;
 import tk.roydgar.model.repository.ClientRepository;
-import tk.roydgar.model.repository.WorkTimeRepository;
-import tk.roydgar.util.PasswordHasherUtil;
+import tk.roydgar.util.HashUtil;
 import tk.roydgar.util.Utils;
 
 
@@ -26,7 +25,7 @@ public class ClientService {
             return null;
         }
 
-        if (!PasswordHasherUtil.checkPassword(password, client.getPassword())) {
+        if (!HashUtil.check(password, client.getPassword())) {
             return null;
         }
 
@@ -42,7 +41,7 @@ public class ClientService {
             return null;
         }
 
-        client.setPassword(PasswordHasherUtil.hashPassword(client.getPassword()));
+        client.setPassword(HashUtil.hash(client.getPassword()));
         client.setRegistrationDate(Utils.getLocalDateTimeInUTC());
 
         return clientRepository.save(client);

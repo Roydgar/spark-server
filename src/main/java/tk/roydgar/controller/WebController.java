@@ -6,11 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import spark.template.velocity.VelocityTemplateEngine;
 import tk.roydgar.model.entity.Comment;
-import tk.roydgar.model.service.AppointmentService;
-import tk.roydgar.model.service.ClientService;
-import tk.roydgar.model.service.CommentService;
-import tk.roydgar.model.service.NewsService;
+import tk.roydgar.model.service.*;
 import tk.roydgar.util.JsonTransformer;
+import tk.roydgar.util.SmtpMailSender;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -24,8 +22,11 @@ public class WebController {
     private NewsService newsService;
     private CommentService commentService;
     private AppointmentService appointmentService;
+    private ProcedureService procedureService;
+
     private VelocityTemplateEngine velocityTemplateEngine;
     private JsonTransformer jsonTransformer;
+
 
     public void setupRoutes() {
 
@@ -51,6 +52,10 @@ public class WebController {
 
         get("/appointments", (request, response) ->
             appointmentService.findAll(), jsonTransformer);
-    }
+
+        get("services/:clientId", (request, response) ->
+            procedureService.findByClientId(request.params(":clientId")), jsonTransformer);
+
+        }
 
 }
