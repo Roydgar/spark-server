@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-@Component
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class SmtpMailSender {
 

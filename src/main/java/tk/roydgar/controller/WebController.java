@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import spark.template.velocity.VelocityTemplateEngine;
+import tk.roydgar.model.entity.Appointment;
 import tk.roydgar.model.entity.Comment;
 import tk.roydgar.model.service.*;
 import tk.roydgar.util.JsonTransformer;
@@ -12,6 +13,7 @@ import tk.roydgar.util.SmtpMailSender;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
+import static spark.route.HttpMethod.post;
 
 @Controller
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -50,8 +52,15 @@ public class WebController {
                                 , request.params(":clientId"))
                 , jsonTransformer);
 
-        get("/appointments", (request, response) ->
-            appointmentService.findAll(), jsonTransformer);
+        get("/appointments/:clientId", (request, response) ->
+            appointmentService.findByClientId(request.params(":clientId")), jsonTransformer);
+
+        post("/addAppointment/:clientId", (request, response) ->
+            appointmentService.save(
+                    new ObjectMapper().readValue(request.body(), Appointment.class)
+                    , request.params(":clientId"))
+                    , jsonTransformer);
+
 
         get("services/:clientId", (request, response) ->
             procedureService.findByClientId(request.params(":clientId")), jsonTransformer);

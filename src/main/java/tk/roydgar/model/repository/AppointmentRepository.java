@@ -14,4 +14,5 @@ public interface AppointmentRepository extends CrudRepository<Appointment, Long>
     @Query(value = "SELECT * FROM appointment WHERE DATE(time) = ?1", nativeQuery = true)
     List<Appointment> findAllByDate(LocalDate date);
 
+    List<Appointment> findAllByClientId(Long client_client_id);
 }

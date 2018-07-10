@@ -17,4 +17,4 @@ INSERT INTO service VALUES (3, 45, 'service 2', 1000, 2);
 INSERT INTO service VALUES (4, 70, 'service 3', 2000, 2);
 INSERT INTO service VALUES (5, 110, 'service 4', 3000, 2);
 
-INSERT INTO appointment VALUES (2,  now(), 2, 2);
+INSERT INTO appointment VALUES (2,  now(), 2, 2, 2);

@@ -1,5 +1,6 @@
 package tk.roydgar.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import javax.persistence.*;
@@ -33,5 +34,8 @@ public class Appointment {
     @JsonProperty("service")
     private Procedure procedure;
 
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id", nullable = false)
+    @JsonIgnore
+    private Client client;
 }
