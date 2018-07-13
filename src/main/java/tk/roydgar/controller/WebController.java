@@ -24,7 +24,7 @@ public class WebController {
 
     private JsonTransformer jsonTransformer;
     private ObjectMapper objectMapperDeserializer;
-    
+
     public void setupRoutes() {
 
         get("/client/:name", (request, response) ->
