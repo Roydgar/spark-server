@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import spark.template.velocity.VelocityTemplateEngine;
 import tk.roydgar.util.JsonTransformer;
 
 import javax.sql.DataSource;
@@ -17,11 +16,6 @@ import javax.sql.DataSource;
 @Configuration
 @ComponentScan("tk.roydgar")
 public class AppConfig {
-
-    @Bean
-    public VelocityTemplateEngine velocityTemplateEngine() {
-        return new VelocityTemplateEngine();
-    }
 
     @Bean
     public JsonTransformer jsonTransformer() {

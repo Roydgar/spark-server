@@ -29,7 +29,7 @@ public class Appointment {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "service_id")
     @JsonProperty("service")
     private Procedure procedure;

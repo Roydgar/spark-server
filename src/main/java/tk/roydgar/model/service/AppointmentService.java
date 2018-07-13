@@ -8,6 +8,7 @@ import tk.roydgar.model.entity.Client;
 import tk.roydgar.model.entity.Procedure;
 import tk.roydgar.model.repository.AppointmentRepository;
 import tk.roydgar.model.repository.ClientRepository;
+import tk.roydgar.model.repository.CustomerRepository;
 import tk.roydgar.model.repository.ProcedureRepository;
 import tk.roydgar.util.Utils;
 
@@ -23,6 +24,7 @@ public class AppointmentService {
     private AppointmentRepository appointmentRepository;
     private ClientRepository clientRepository;
     private ProcedureRepository procedureRepository;
+    private CustomerRepository customerRepository;
 
     public Iterable<Appointment> findByClientId(String clientId) {
         Long id = Utils.parseId(clientId);

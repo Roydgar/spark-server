@@ -4,37 +4,28 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import spark.template.velocity.VelocityTemplateEngine;
 import tk.roydgar.model.entity.Appointment;
 import tk.roydgar.model.entity.Comment;
 import tk.roydgar.model.service.*;
 import tk.roydgar.util.JsonTransformer;
-import tk.roydgar.util.SmtpMailSender;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
-import static spark.route.HttpMethod.post;
 
 @Controller
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class WebController {
 
-    private IndexPageController indexPageController;
     private ClientService clientService;
     private NewsService newsService;
     private CommentService commentService;
     private AppointmentService appointmentService;
     private ProcedureService procedureService;
 
-    private VelocityTemplateEngine velocityTemplateEngine;
     private JsonTransformer jsonTransformer;
     private ObjectMapper objectMapperDeserializer;
-
-
+    
     public void setupRoutes() {
-
-        get("/", indexPageController.handle, velocityTemplateEngine);
-
 
         get("/client/:name", (request, response) ->
                         clientService.findByName(request.params(":name"))
