@@ -28,6 +28,7 @@ public class WebController {
 
     private VelocityTemplateEngine velocityTemplateEngine;
     private JsonTransformer jsonTransformer;
+    private ObjectMapper objectMapperDeserializer;
 
 
     public void setupRoutes() {
@@ -55,12 +56,12 @@ public class WebController {
         get("/appointments/:clientId", (request, response) ->
             appointmentService.findByClientId(request.params(":clientId")), jsonTransformer);
 
-        post("/addAppointment/:clientId", (request, response) ->
+        post("/addAppointment/:clientId/:serviceId", (request, response) ->
             appointmentService.save(
-                    new ObjectMapper().readValue(request.body(), Appointment.class)
-                    , request.params(":clientId"))
+                   objectMapperDeserializer.readValue(request.body(), Appointment.class)
+                    , request.params(":clientId")
+                    , request.params(":serviceId"))
                     , jsonTransformer);
-
 
         get("services/:clientId", (request, response) ->
             procedureService.findByClientId(request.params(":clientId")), jsonTransformer);

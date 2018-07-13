@@ -1,5 +1,9 @@
 package tk.roydgar.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +37,14 @@ public class AppConfig {
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 
         return dataSource;
+    }
+
+    @Bean(name = "objectMapperDeserializer")
+    public ObjectMapper objectMapperDeserializer() {
+        return new ObjectMapper()
+                .registerModule(new ParameterNamesModule())
+                .registerModule(new Jdk8Module())
+                .registerModule(new JavaTimeModule());
     }
 
 }
