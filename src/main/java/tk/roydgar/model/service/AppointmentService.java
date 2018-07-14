@@ -3,6 +3,7 @@ package tk.roydgar.model.service;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tk.roydgar.model.entity.Appointment;
 import tk.roydgar.model.entity.Client;
 import tk.roydgar.model.entity.Procedure;
@@ -27,6 +28,7 @@ public class AppointmentService {
     private ClientRepository clientRepository;
     private ProcedureRepository procedureRepository;
 
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<Appointment> findByClientId(String clientId) {
         Long id = Utils.parseId(clientId);
         if (id == null) {
@@ -36,6 +38,7 @@ public class AppointmentService {
         return appointmentRepository.findAllByClientId(id);
     }
 
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<Appointment> findByDateAndClientId(String clientId, String date) {
         Long id = Utils.parseId(clientId);
         if (id == null) {
@@ -53,6 +56,7 @@ public class AppointmentService {
         }
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public Appointment save(Appointment appointment, String clientId, String serviceId) {
         Long idClient = Utils.parseId(clientId);
         Long idService = Utils.parseId(serviceId);

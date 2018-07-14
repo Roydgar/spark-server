@@ -3,6 +3,7 @@ package tk.roydgar.model.service;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tk.roydgar.model.entity.Comment;
 import tk.roydgar.model.repository.ClientRepository;
 import tk.roydgar.model.repository.CommentRepository;
@@ -17,6 +18,7 @@ public class CommentService {
     private CommentRepository commentRepository;
     private ClientRepository clientRepository;
 
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<Comment> findByClientId(String clientId) {
         Long id = Utils.parseId(clientId);
         if (id == null) {
@@ -26,6 +28,7 @@ public class CommentService {
         return commentRepository.findAllByClientId(id);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public Comment save(Comment comment, String clientId) {
         Long id = Utils.parseId(clientId);
         if (comment == null || id == null) {
