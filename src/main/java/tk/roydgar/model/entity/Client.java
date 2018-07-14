@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter @Setter
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(exclude = "password")

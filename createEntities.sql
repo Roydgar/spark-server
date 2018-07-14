@@ -12,6 +12,7 @@ INSERT INTO comment VALUES (3, 5, 2, 'some text', now(), '0', 2);
 
 INSERT INTO customer VALUES (2, 'royd@mail.ua', 'Vitia', '052553', 'Bolgov');
 
+
 INSERT INTO service VALUES (2, 30, 'service 1', 5000, 2);
 INSERT INTO service VALUES (3, 45, 'service 2', 1000, 2);
 INSERT INTO service VALUES (4, 70, 'service 3', 2000, 2);

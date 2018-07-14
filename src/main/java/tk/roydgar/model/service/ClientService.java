@@ -19,36 +19,4 @@ public class ClientService {
         return clientRepository.findByName(name);
     }
 
-    public Client login(String login, String password) {
-        Client client = clientRepository.findByLogin(login);
-        if (client == null) {
-            return null;
-        }
-
-        if (!HashUtil.check(password, client.getPassword())) {
-            return null;
-        }
-
-        return client;
-    }
-
-    public Client save(Client client) {
-        if (client == null) {
-            return null;
-        }
-
-        if (clientWithGivenLoginExists(client.getLogin())) {
-            return null;
-        }
-
-        client.setPassword(HashUtil.hash(client.getPassword()));
-        client.setRegistrationDate(Utils.getLocalDateTimeInUTC());
-
-        return clientRepository.save(client);
-    }
-
-    private boolean clientWithGivenLoginExists(String login) {
-        return clientRepository.findByLogin(login) != null;
-    }
-
 }

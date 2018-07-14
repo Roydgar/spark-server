@@ -24,7 +24,6 @@ public class AppointmentService {
     private AppointmentRepository appointmentRepository;
     private ClientRepository clientRepository;
     private ProcedureRepository procedureRepository;
-    private CustomerRepository customerRepository;
 
     public Iterable<Appointment> findByClientId(String clientId) {
         Long id = Utils.parseId(clientId);

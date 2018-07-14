@@ -7,6 +7,7 @@ import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import tk.roydgar.util.JsonTransformer;
 
@@ -15,6 +16,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan("tk.roydgar")
+@PropertySource("classpath:application.properties")
 public class AppConfig {
 
     @Bean

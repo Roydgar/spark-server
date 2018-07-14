@@ -3,7 +3,6 @@ package tk.roydgar.util;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 public class HashUtil {
-    // Define the BCrypt workload to use when generating password hashes. 10-31 is a valid value.
 
     public static String hash(String passwordPlaintext) {
         String salt = BCrypt.gensalt(12);

@@ -1,13 +1,15 @@
 package tk.roydgar.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Getter @Setter
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "customer")
 public class Customer {
@@ -32,7 +34,14 @@ public class Customer {
     @Column(length = 60)
     private String email;
 
+    @Column(name = "car_brand", length = 60)
+    private String carBrand;
+
+    @Column(name = "car_model" , length = 60)
+    private String carModel;
+
     @OneToOne(mappedBy = "customer")
     @JsonIgnore
     private Appointment appointment;
+
 }
