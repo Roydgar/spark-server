@@ -47,6 +47,11 @@ public class WebController {
         get("/appointments/:clientId", (request, response) ->
             appointmentService.findByClientId(request.params(":clientId")), jsonTransformer);
 
+        get("/appointments/:clientId/:date", (request, response) ->
+                appointmentService.findByDateAndClientId(
+                        request.params(":clientId")
+                        , request.params(":date")), jsonTransformer);
+
         post("/addAppointment/:clientId/:serviceId", (request, response) ->
             appointmentService.save(
                    objectMapperDeserializer.readValue(request.body(), Appointment.class)

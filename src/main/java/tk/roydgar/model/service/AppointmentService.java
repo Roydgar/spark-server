@@ -14,6 +14,8 @@ import tk.roydgar.util.Utils;
 
 import javax.imageio.spi.ServiceRegistry;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,13 +27,30 @@ public class AppointmentService {
     private ClientRepository clientRepository;
     private ProcedureRepository procedureRepository;
 
-    public Iterable<Appointment> findByClientId(String clientId) {
+    public List<Appointment> findByClientId(String clientId) {
         Long id = Utils.parseId(clientId);
         if (id == null) {
             return null;
         }
 
         return appointmentRepository.findAllByClientId(id);
+    }
+
+    public List<Appointment> findByDateAndClientId(String clientId, String date) {
+        Long id = Utils.parseId(clientId);
+        if (id == null) {
+            return null;
+        }
+
+        try {
+            LocalDate parsedDate = LocalDate.parse(date);
+            LocalDateTime from = LocalDateTime.of(parsedDate, LocalTime.of(0, 0, 0));
+            LocalDateTime to = LocalDateTime.of(parsedDate, LocalTime.of(23, 59, 59));
+
+            return appointmentRepository.findAllByClientIdAndTimeBetween(id, from, to);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public Appointment save(Appointment appointment, String clientId, String serviceId) {
