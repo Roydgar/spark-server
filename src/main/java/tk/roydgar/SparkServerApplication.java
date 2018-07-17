@@ -13,9 +13,8 @@ import java.nio.charset.StandardCharsets;
 @SpringBootApplication
 public class SparkServerApplication {
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args){
         SpringApplication.run(SparkServerApplication.class, args);
-
     }
 
 
