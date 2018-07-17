@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -14,6 +16,8 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import tk.roydgar.util.DbPasswordHasher;
 
 import javax.sql.DataSource;
+
+import java.util.logging.LogManager;
 
 import static tk.roydgar.util.constants.Constants.DEFAULT_PACKAGE;
 import static tk.roydgar.util.constants.FilePaths.APPLICATION_PROPERTIES;
@@ -31,6 +35,11 @@ public class AppConfig {
     @Autowired
     public AppConfig(Environment env) {
         this.environment = env;
+    }
+
+    @Bean
+    public Logger logger() {
+        return LoggerFactory.getLogger("application");
     }
 
     @Bean
