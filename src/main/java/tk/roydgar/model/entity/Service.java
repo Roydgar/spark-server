@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 @Entity
 @Table(name = "service")
-public class Procedure {
+public class Service {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

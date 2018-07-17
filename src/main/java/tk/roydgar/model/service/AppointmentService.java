@@ -2,14 +2,13 @@ package tk.roydgar.model.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.roydgar.model.entity.Appointment;
 import tk.roydgar.model.entity.Client;
-import tk.roydgar.model.entity.Procedure;
+import tk.roydgar.model.entity.Service;
 import tk.roydgar.model.repository.AppointmentRepository;
 import tk.roydgar.model.repository.ClientRepository;
-import tk.roydgar.model.repository.ProcedureRepository;
+import tk.roydgar.model.repository.ServiceRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,13 +16,13 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@org.springframework.stereotype.Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class AppointmentService {
 
     private AppointmentRepository appointmentRepository;
     private ClientRepository clientRepository;
-    private ProcedureRepository procedureRepository;
+    private ServiceRepository serviceRepository;
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<Appointment> findByClientId(Long clientId) {
@@ -50,14 +49,14 @@ public class AppointmentService {
         }
 
         Optional<Client> client = clientRepository.findById(clientId);
-        Optional<Procedure> procedure = procedureRepository.findById(serviceId);
+        Optional<Service> procedure = serviceRepository.findById(serviceId);
 
         if (!client.isPresent() || !procedure.isPresent()) {
             return null;
         }
 
         appointment.setClient(client.get());
-        appointment.setProcedure(procedure.get());
+        appointment.setService(procedure.get());
 
         return appointmentRepository.save(appointment);
     }

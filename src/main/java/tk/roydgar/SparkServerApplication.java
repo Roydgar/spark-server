@@ -4,12 +4,41 @@ package tk.roydgar;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
+
 @SpringBootApplication
 public class SparkServerApplication {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
         SpringApplication.run(SparkServerApplication.class, args);
-	}
+
+    }
 
 
+	private static void sendRequest() {
+        try {
+            URL url = new URL("http://localhost:8080/addAppointment/2/2");
+            URLConnection con = url.openConnection();
+            HttpURLConnection http = (HttpURLConnection) con;
+            http.setRequestMethod("POST"); // PUT is another valid option
+            http.setDoOutput(true);
+
+
+            byte[] out = "{\"time\":[2018, 7, 18, 12, 0], \"customer\": { \"phone\" : \"239892937r8\",  \"name\" : \"Uebashka\",  \"surname\" : \"678\", \"email\" : \"fee@MAIL.com\"}}".getBytes(StandardCharsets.UTF_8);
+            int length = out.length;
+
+            http.setFixedLengthStreamingMode(length);
+            http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            http.connect();
+            try (OutputStream os = http.getOutputStream()) {
+                os.write(out);
+            }
+        } catch (Exception e) {
+
+        }
+    }
 }

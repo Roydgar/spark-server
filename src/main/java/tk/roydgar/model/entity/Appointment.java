@@ -33,7 +33,7 @@ public class Appointment {
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "service_id")
     @JsonProperty("service")
-    private Procedure procedure;
+    private Service service;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", nullable = false)
