@@ -19,26 +19,17 @@ public class CommentService {
     private ClientRepository clientRepository;
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public List<Comment> findByClientId(String clientId) {
-        Long id = Utils.parseId(clientId);
-        if (id == null) {
-            return null;
-        }
-
-        return commentRepository.findAllByClientId(id);
+    public List<Comment> findByClientId(Long clientId) {
+        return commentRepository.findAllByClientId(clientId);
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Comment save(Comment comment, String clientId) {
-        Long id = Utils.parseId(clientId);
-        if (comment == null || id == null) {
-            return null;
-        }
+    public Comment save(Comment comment, Long clientId) {
 
         comment.setUsefulness(0);
         comment.setTime(Utils.getLocalDateTimeInUTC());
 
-        return clientRepository.findById(id).map(client -> {
+        return clientRepository.findById(clientId).map(client -> {
             comment.setClient(client);
             return commentRepository.save(comment);
         }).orElse(null);

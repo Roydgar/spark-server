@@ -17,13 +17,8 @@ public class NewsService {
     private NewsRepository newsRepository;
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public List<News> findByClientId(String clientId) {
-        Long id = Utils.parseId(clientId);
-        if (id == null) {
-            return null;
-        }
-
-        return newsRepository.findAllByClientId(id);
+    public List<News> findByClientId(Long clientId) {
+        return newsRepository.findAllByClientId(clientId);
     }
 
 }

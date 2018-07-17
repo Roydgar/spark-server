@@ -1,6 +1,6 @@
 package tk.roydgar.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
@@ -9,38 +9,41 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import tk.roydgar.util.JsonTransformer;
 
 import javax.sql.DataSource;
 
+import static tk.roydgar.util.constants.Constants.DEFAULT_PACKAGE;
+import static tk.roydgar.util.constants.FilePaths.APPLICATION_PROPERTIES;
+
 
 @Configuration
-@ComponentScan("tk.roydgar")
-@PropertySource("classpath:application.properties")
+@ComponentScan(DEFAULT_PACKAGE)
+@PropertySource(APPLICATION_PROPERTIES)
 public class AppConfig {
 
     @Bean
-    public JsonTransformer jsonTransformer() {
-        return new JsonTransformer();
-    }
-
-    @Bean(name = "dataSource")
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setUrl("jdbc:mysql://us-cdbr-iron-east-04.cleardb.net:3306/heroku_d439c41c7bfdff8?reconnect=true");
-        dataSource.setUsername("b069c397021c65");
-        dataSource.setPassword("bc083c0b");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/workshop?reconnect=true");
+        dataSource.setUsername("roydgaryshka");
+        dataSource.setPassword("root");
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-
         return dataSource;
     }
 
-    @Bean(name = "objectMapperDeserializer")
-    public ObjectMapper objectMapperDeserializer() {
-        return new ObjectMapper()
-                .registerModule(new ParameterNamesModule())
-                .registerModule(new Jdk8Module())
-                .registerModule(new JavaTimeModule());
+    @Bean
+    public Module parameterNamesModule() {
+        return new ParameterNamesModule();
+    }
+
+    @Bean
+    public Module jdk8Module() {
+        return new Jdk8Module();
+    }
+
+    @Bean
+    public Module javaTimeModule() {
+        return new JavaTimeModule();
     }
 
 }

@@ -17,13 +17,8 @@ public class ProcedureService {
     private ProcedureRepository procedureRepository;
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public List<Procedure> findByClientId(String clientId) {
-        Long id = Utils.parseId(clientId);
-        if (id == null) {
-            return null;
-        }
-
-        return procedureRepository.findAllByClientId(id);
+    public List<Procedure> findByClientId(Long clientId) {
+        return procedureRepository.findAllByClientId(clientId);
     }
 
 }
