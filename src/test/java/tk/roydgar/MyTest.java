@@ -26,10 +26,7 @@ public class MyTest {
 
     @Test
     public void test()throws Exception {
-        User user = User.builder().email("roydgaryshka@gmail.com")
-                .name("vit").surname("pups").phone("22299").password("1233")
-                .car(new Car("saf", "sfa")).build();
-        System.out.println(jacksonObjectMapper.writeValueAsString(user));
+
     }
 
 }

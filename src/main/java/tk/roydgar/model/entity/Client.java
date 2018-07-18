@@ -46,9 +46,6 @@ public class Client {
     @Column
     private String logoURL;
 
-    @Column
-    private String advantages;
-
     @NotNull
     @Column(nullable = false)
     private String email;
@@ -60,7 +57,10 @@ public class Client {
     @Embedded
     private Address address;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "client", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client", cascade = CascadeType.ALL)
     private List<WorkTime> workDays;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client", cascade = CascadeType.ALL)
+    private List<Advantage> advantages;
 
 }

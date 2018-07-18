@@ -32,6 +32,10 @@ public class Service {
     @Column(nullable = false)
     private Long price;
 
+    @NotNull
+    @Column(nullable = false)
+    private String description;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", nullable = false)
     @JsonIgnore
