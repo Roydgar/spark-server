@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor @AllArgsConstructor
 @Builder
 @Embeddable
-class Address {
+public class Address {
 
     @NotNull
     @Column(nullable = false, length = 60)
