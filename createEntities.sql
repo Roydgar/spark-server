@@ -1,4 +1,4 @@
-INSERT INTO client VALUES (2, 'Baiker street', 34.234342, 35.423523, 'Were the best', 'royd@mail.ru', 'client', 'some url' ,'sto', '0000', '88005555535', now());
+INSERT INTO client VALUES (2, 'Kyev', '13-A', 34.234342, 35.423523, 'Polytechnichna street', 'Were the best', 'royd@mail.ru', 'client', 'some url' ,'sto', '0000', '88005555535', now());
 
 INSERT INTO work_time VALUES (2, 'MONDAY', '09:00:00', 'FRIDAY', '20:00:00', 2);
 

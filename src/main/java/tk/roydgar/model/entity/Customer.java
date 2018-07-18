@@ -2,6 +2,7 @@ package tk.roydgar.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import tk.roydgar.model.entity.embeddable.Car;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -34,11 +35,8 @@ public class Customer {
     @Column(length = 60)
     private String email;
 
-    @Column(name = "car_brand", length = 60)
-    private String carBrand;
-
-    @Column(name = "car_model" , length = 60)
-    private String carModel;
+    @Embedded
+    private Car car;
 
     @OneToOne(mappedBy = "customer")
     @JsonIgnore
