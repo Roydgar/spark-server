@@ -1,7 +1,6 @@
 package tk.roydgar.util;
 
 import java.security.spec.KeySpec;
-import javax.annotation.Resource;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -9,9 +8,8 @@ import javax.crypto.spec.DESedeKeySpec;
 
 import lombok.SneakyThrows;
 import org.apache.tomcat.util.codec.binary.Base64;
-import org.slf4j.Logger;
 
-public class DbPasswordHasher {
+public class StringHasher {
 
     private static final String UNICODE_FORMAT = "UTF8";
     private static final String DESEDE_ENCRYPTION_SCHEME = "DESede";
@@ -19,7 +17,7 @@ public class DbPasswordHasher {
     private SecretKey key;
 
     @SneakyThrows
-    public DbPasswordHasher(){
+    public StringHasher(){
         String myEncryptionKey = "ThisIsSpartaThisIsSparta";
         String myEncryptionScheme = DESEDE_ENCRYPTION_SCHEME;
         byte[] arrayBytes = myEncryptionKey.getBytes(UNICODE_FORMAT);
@@ -54,9 +52,9 @@ public class DbPasswordHasher {
 
     public static void main(String args [])
     {
-        DbPasswordHasher td= new DbPasswordHasher();
+        StringHasher td= new StringHasher();
 
-        String target="target";
+        String target="97063c3d";
         String encrypted=td.encrypt(target);
         String decrypted=td.decrypt(encrypted);
 

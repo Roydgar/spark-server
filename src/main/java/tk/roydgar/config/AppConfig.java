@@ -13,11 +13,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import tk.roydgar.util.DbPasswordHasher;
+import tk.roydgar.util.StringHasher;
 
 import javax.sql.DataSource;
-
-import java.util.logging.LogManager;
 
 import static tk.roydgar.util.constants.Constants.DEFAULT_PACKAGE;
 import static tk.roydgar.util.constants.FilePaths.APPLICATION_PROPERTIES;
@@ -44,29 +42,15 @@ public class AppConfig {
 
     @Bean
     public DataSource dataSource() {
-        DbPasswordHasher hasher = new DbPasswordHasher();
+        StringHasher hasher = new StringHasher();
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-        dataSource.setUrl("jdbc:mysql://eu-cdbr-west-02.cleardb.net/heroku_3d8b1b1abd576b1?reconnect=true");
-        dataSource.setUsername("bfae3b2b786739");
-        dataSource.setPassword("97063c3d");
+        dataSource.setUrl(hasher.decrypt(environment.getProperty("heroku.url")));
+        dataSource.setUsername(hasher.decrypt(environment.getProperty("heroku.username")));
+        dataSource.setPassword(hasher.decrypt(environment.getProperty("heroku.password")));
         dataSource.setDriverClassName(hasher.decrypt(environment.getProperty("driver")));
         return dataSource;
     }
 
-    @Bean
-    public Module parameterNamesModule() {
-        return new ParameterNamesModule();
-    }
-
-    @Bean
-    public Module jdk8Module() {
-        return new Jdk8Module();
-    }
-
-    @Bean
-    public Module javaTimeModule() {
-        return new JavaTimeModule();
-    }
 
 }
