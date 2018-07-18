@@ -1,15 +1,8 @@
 package tk.roydgar;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import tk.roydgar.model.entity.User;
-import tk.roydgar.model.entity.embeddable.Car;
-import tk.roydgar.util.HashUtil;
-import tk.roydgar.util.SmtpMailSender;
 
 import java.io.OutputStream;
 import java.net.HttpURLConnection;

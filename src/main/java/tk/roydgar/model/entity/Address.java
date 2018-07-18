@@ -1,19 +1,25 @@
-package tk.roydgar.model.entity.embeddable;
+package tk.roydgar.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor @AllArgsConstructor
 @Builder
-@Embeddable
+@Entity
+@Table(name = "address")
 public class Address {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "address_id")
+    private Long id;
 
     @NotNull
     @Column(nullable = false, length = 60)
@@ -33,5 +39,10 @@ public class Address {
 
     @Column(nullable = false)
     private Double latitude;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "client_id")
+    @JsonIgnore
+    private Client client;
 
 }

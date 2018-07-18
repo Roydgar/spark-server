@@ -51,6 +51,7 @@ public class UserService {
             return null;
         }
 
+        user.setPassword(HashUtil.hash(user.getEmail().concat(user.getPassword())));
         User savedUser = userRepository.save(user);
 
         smtpMailSender.send(user.getEmail(),
@@ -58,7 +59,7 @@ public class UserService {
                     ,   "Please, confirm your email following next link: " +
                         "https://workshop-master-server.herokuapp.com/user/confirmation/"
                         + savedUser.getId() + "/" +
-                        stringHasher.encrypt(user.getEmail()));
+                        stringHasher.encrypt(savedUser.getId() + user.getEmail()));
         return savedUser;
     }
 
@@ -72,7 +73,7 @@ public class UserService {
 
         User user = tempUser.get();
 
-        if (stringHasher.decrypt(hash).equals(user.getEmail())) {
+        if (stringHasher.decrypt(hash).equals(userId + user.getEmail())) {
             user.setStatus(User.Status.CONFIRMED);
             userRepository.save(user);
             return user;

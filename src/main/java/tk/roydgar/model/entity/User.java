@@ -1,10 +1,10 @@
 package tk.roydgar.model.entity;
 
 import lombok.*;
-import tk.roydgar.model.entity.embeddable.Car;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Data
 @NoArgsConstructor @AllArgsConstructor
@@ -43,8 +43,8 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Embedded
-    private Car car;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Car> cars;
 
     public enum Status {
         GUEST, CONFIRMED
