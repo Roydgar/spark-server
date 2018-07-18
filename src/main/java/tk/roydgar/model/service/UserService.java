@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tk.roydgar.model.entity.User;
+import tk.roydgar.model.entity.user.User;
 import tk.roydgar.model.entity.temporary.LoginData;
 import tk.roydgar.model.repository.UserRepository;
 import tk.roydgar.util.HashUtil;

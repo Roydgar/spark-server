@@ -2,6 +2,8 @@ package tk.roydgar.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import tk.roydgar.model.entity.client.Client;
+
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;

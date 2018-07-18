@@ -1,4 +1,4 @@
-package tk.roydgar.model.entity;
+package tk.roydgar.model.entity.user;
 
 import lombok.*;
 

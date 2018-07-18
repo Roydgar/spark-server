@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import tk.roydgar.model.entity.Appointment;
-import tk.roydgar.model.entity.Client;
+import tk.roydgar.model.entity.client.Client;
 import tk.roydgar.model.entity.Service;
 import tk.roydgar.model.repository.AppointmentRepository;
 import tk.roydgar.model.repository.ClientRepository;
