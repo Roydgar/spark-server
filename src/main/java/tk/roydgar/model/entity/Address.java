@@ -16,8 +16,16 @@ import javax.validation.constraints.NotNull;
 class Address {
 
     @NotNull
-    @Column(name = "address", nullable = false, length = 160)
-    private String explicitAddress;
+    @Column(nullable = false, length = 60)
+    private String city;
+
+    @NotNull
+    @Column(nullable = false, length = 60)
+    private String street;
+
+    @NotNull
+    @Column(nullable = false, length = 30)
+    private String house;
 
     @NotNull
     @Column(nullable = false)
