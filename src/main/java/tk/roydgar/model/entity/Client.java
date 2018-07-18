@@ -4,6 +4,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import tk.roydgar.model.entity.embeddable.Address;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

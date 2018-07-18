@@ -2,6 +2,7 @@ package tk.roydgar.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import tk.roydgar.model.entity.embeddable.Car;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
