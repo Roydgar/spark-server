@@ -47,9 +47,9 @@ public class AppConfig {
         DbPasswordHasher hasher = new DbPasswordHasher();
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-        dataSource.setUrl(hasher.decrypt(environment.getProperty("local.url")));
-        dataSource.setUsername(hasher.decrypt(environment.getProperty("local.username")));
-        dataSource.setPassword(hasher.decrypt(environment.getProperty("local.password")));
+        dataSource.setUrl("jdbc:mysql://us-cdbr-iron-east-04.cleardb.net:3306/heroku_d439c41c7bfdff8?reconnect=true");
+        dataSource.setUsername("b069c397021c65");
+        dataSource.setPassword("bc083c0b");
         dataSource.setDriverClassName(hasher.decrypt(environment.getProperty("driver")));
         return dataSource;
     }
