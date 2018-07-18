@@ -12,18 +12,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@RunWith(SpringRunner.class)
+
 public class MyTest {
 
-    @Autowired
-    private MockMvc mockMvc;
 
 
     @Test
     public void contextLoads() throws Exception{
-        this.mockMvc.perform(get("/")).andDo(print()).andExpect(status().isOk());
     }
 
 }

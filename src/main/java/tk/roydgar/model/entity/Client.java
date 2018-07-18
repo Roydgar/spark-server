@@ -42,6 +42,12 @@ public class Client {
     @Column(nullable = false, length = 30)
     private String phone;
 
+    @Column
+    private String logoURL;
+
+    @Column
+    private String advantages;
+
     @NotNull
     @Column(nullable = false)
     private String email;
@@ -50,9 +56,8 @@ public class Client {
     @Column(name = "registration_date", nullable = false, updatable = false)
     private LocalDateTime registrationDate;
 
-    @NotNull
-    @Column(nullable = false)
-    private String address;
+    @Embedded
+    private Address address;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "client", cascade = CascadeType.ALL)
     private List<WorkTime> workDays;

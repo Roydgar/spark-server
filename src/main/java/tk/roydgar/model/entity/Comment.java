@@ -37,8 +37,12 @@ public class Comment {
     private Integer mark;
 
     @NotNull
-    @Column(nullable = false)
-    private Integer usefulness;
+    @Column(name = "positive_rating", nullable = false)
+    private Integer positiveRating = 0;
+
+    @NotNull
+    @Column(name = "negative_rating", nullable = false)
+    private Integer negativeRating = 0;
 
     @NotNull
     @Column(name = "time", nullable = false, updatable = false)

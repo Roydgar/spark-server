@@ -26,7 +26,6 @@ public class CommentService {
     @Transactional(rollbackFor = Exception.class)
     public Comment save(Comment comment, Long clientId) {
 
-        comment.setUsefulness(0);
         comment.setTime(Utils.getLocalDateTimeInUTC());
 
         return clientRepository.findById(clientId).map(client -> {
