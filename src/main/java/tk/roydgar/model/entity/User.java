@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Entity
 @Table(name = "customer")
-public class Customer {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,8 +32,13 @@ public class Customer {
     @Column(nullable = false, length = 20)
     private String phone;
 
-    @Column(length = 60)
+    @NotNull
+    @Column(nullable = false, length = 60)
     private String email;
+
+    @NotNull
+    @Column(nullable = false)
+    private String password;
 
     @Embedded
     private Car car;

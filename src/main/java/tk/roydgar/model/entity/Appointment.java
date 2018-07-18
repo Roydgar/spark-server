@@ -28,7 +28,7 @@ public class Appointment {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
-    private Customer customer;
+    private User user;
 
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "service_id")
