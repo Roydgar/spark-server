@@ -11,10 +11,11 @@ public class HashUtil {
     }
 
     public static boolean check(String passwordPlaintext, String storedHash) {
-        if(null == storedHash || !storedHash.startsWith("$2a$"))
-            throw new java.lang.IllegalArgumentException("Invalid hash provided for comparison");
-
         return BCrypt.checkpw(passwordPlaintext, storedHash);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(hash("0000"));
     }
 
 }

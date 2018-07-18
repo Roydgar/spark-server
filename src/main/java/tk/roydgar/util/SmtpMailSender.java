@@ -10,6 +10,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 @AllArgsConstructor(onConstructor = @__(@Autowired))
+@Component
 public class SmtpMailSender {
 
     private JavaMailSender javaMailSender;

@@ -1,18 +1,16 @@
 package tk.roydgar.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import tk.roydgar.model.entity.embeddable.Car;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@Getter @Setter
-@EqualsAndHashCode
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
+@NoArgsConstructor @AllArgsConstructor
+@Builder
 @Entity
-@Table(name = "customer")
+@Table(name = "user")
 public class User {
 
     @Id
@@ -37,14 +35,19 @@ public class User {
     private String email;
 
     @NotNull
+    @Column(nullable = false, length = 20)
+    @Enumerated(value = EnumType.STRING)
+    private Status status = Status.GUEST;
+
+    @NotNull
     @Column(nullable = false)
     private String password;
 
     @Embedded
     private Car car;
 
-    @OneToOne(mappedBy = "customer")
-    @JsonIgnore
-    private Appointment appointment;
+    public enum Status {
+        GUEST, CONFIRMED
+    }
 
 }
