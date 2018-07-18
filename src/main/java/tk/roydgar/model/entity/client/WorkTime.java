@@ -1,6 +1,7 @@
 package tk.roydgar.model.entity.client;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -41,7 +42,7 @@ public class WorkTime {
 
     @ManyToOne(cascade= CascadeType.ALL)
     @JoinColumn(name = "client_id")
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Client client;
 
 }

@@ -1,6 +1,7 @@
 package tk.roydgar.model.entity.client;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -42,7 +43,7 @@ public class Address {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "client_id")
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Client client;
 
 }
