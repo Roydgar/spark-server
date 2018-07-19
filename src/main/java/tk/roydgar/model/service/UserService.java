@@ -19,7 +19,6 @@ public class UserService {
 
     private UserRepository userRepository;
     private SmtpMailSender smtpMailSender;
-    private StringHasher stringHasher;
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public User login(LoginData loginData) {
@@ -42,12 +41,16 @@ public class UserService {
             return loggedUser;
         }
 
-        return HashUtil.check(password, loggedUser.getPassword()) ? loggedUser : null;
+        return null;
     }
 
     @Transactional(rollbackFor = Exception.class)
     public User register(User user) {
         if (user == null) {
+            return null;
+        }
+
+        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             return null;
         }
 
@@ -59,7 +62,7 @@ public class UserService {
                     ,   "Please, confirm your email following next link: " +
                         "https://workshop-master-server.herokuapp.com/user/confirmation/"
                         + savedUser.getId() + "/" +
-                        stringHasher.encrypt(savedUser.getId() + user.getEmail()));
+                        savedUser.getName());
         return savedUser;
     }
 
@@ -73,7 +76,7 @@ public class UserService {
 
         User user = tempUser.get();
 
-        if (stringHasher.decrypt(hash).equals(userId + user.getEmail())) {
+        if (hash.equals(user.getName())) {
             user.setStatus(User.Status.CONFIRMED);
             userRepository.save(user);
             return user;
