@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
+@ToString(exclude = "password")
 @NoArgsConstructor @AllArgsConstructor
 @Builder
 @Entity
