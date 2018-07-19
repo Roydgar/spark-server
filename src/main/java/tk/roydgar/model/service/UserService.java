@@ -87,14 +87,14 @@ public class UserService {
 
         User user = tempUser.get();
 
-        if (hash.equals(user.getName())) {
+        if (hash.equals(user.getName()) && user.getStatus() == User.Status.GUEST) {
             user.setStatus(User.Status.CONFIRMED);
             userRepository.save(user);
             logger.info("confrimEmail() call; SUCCESS; confirmedUser = " + user);
             return user;
         }
 
-        logger.info("confirmEmail() call; FAILURE; incorrect hash; userId = "
+        logger.info("confirmEmail() call; FAILURE; incorrect hash or already confirmed; userId = "
                 + userId + "; hash = " + hash + "; user = " + user);
         return null;
     }

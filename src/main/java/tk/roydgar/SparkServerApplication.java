@@ -27,7 +27,13 @@ public class SparkServerApplication {
 
     private static void sendLoginRequest() {
         sendRequest("http://localhost:8080/user/login",
-                "{\"email\":\"roydgaryshk3a@gmail.com\", \"password\":\"0000\"}");
+                "{\"email\":\"roydgaryshk3a@gmail.com\", \"user\":" +
+                        "{\"name\":\"Vitysha\",\"surname\":\"Pups\",\"phone\":\"123213123\", \"email\":\"roydgaryshka@gmail.com\",\"cars\":[{\"brand\":\"sfasf\",\"model\":\"asasf\"}]}}");
+    }
+
+    private static void sendAppointmentRequest() {
+        sendRequest("http://localhost:8080/user/addAppointment/2",
+                "{\"time\":\"2018-07-19T11:11:01\", \"user\":\"0000\"}");
     }
     private static void sendRequest(String myUrl, String json) {
         try {
