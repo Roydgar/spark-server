@@ -1,6 +1,7 @@
 package tk.roydgar.model.service;
 
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,7 +10,7 @@ import tk.roydgar.model.entity.temporary.LoginData;
 import tk.roydgar.model.repository.UserRepository;
 import tk.roydgar.util.HashUtil;
 import tk.roydgar.util.SmtpMailSender;
-import tk.roydgar.util.StringHasher;
+
 
 import java.util.Optional;
 
@@ -19,6 +20,7 @@ public class UserService {
 
     private UserRepository userRepository;
     private SmtpMailSender smtpMailSender;
+    private Logger logger;
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public User login(LoginData loginData) {
@@ -50,9 +52,9 @@ public class UserService {
             return null;
         }
 
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            return null;
-        }
+//        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+//            return null;
+//        }
 
         user.setPassword(HashUtil.hash(user.getEmail().concat(user.getPassword())));
         User savedUser = userRepository.save(user);

@@ -1,4 +1,9 @@
-INSERT INTO client VALUES (2,  'royd@mail.ru', 'client', 'some url' ,'sto', '$2a$12$1hiwzi6gw/vZiDMzpbH5weNr2F7ZdnlazVq5vW0saVyWm.PwdyxWW', '88005555535', now());
+INSERT INTO client VALUES (2,  'royd@mail.ru', 'client', 'some url' ,'sto', '$2a$12$1hiwzi6gw/vZiDMzpbH5weNr2F7ZdnlazVq5vW0saVyWm.PwdyxWW', now());
+
+INSERT INTO mobile_number VALUES(2, '88005555535', 'Vodafone', 2);
+
+INSERT INTO mobile_number VALUES(3, '0502345213', 'Kyivstar', 2);
+
 
 INSERT INTO advantage VALUES (2, 'We repair very fast!', 'Fast repair', 2);
 

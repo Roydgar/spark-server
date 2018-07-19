@@ -15,7 +15,6 @@ import java.util.List;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-
 @ToString(exclude = "password")
 @Builder
 @Entity
@@ -41,10 +40,6 @@ public class Client {
     @Column(nullable = false, length = 80)
     private String name;
 
-    @NotNull
-    @Column(nullable = false, length = 30)
-    private String phone;
-
     @Column
     private String logoURL;
 
@@ -64,5 +59,8 @@ public class Client {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client", cascade = CascadeType.ALL)
     private List<Address> addresses;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client", cascade = CascadeType.ALL)
+    private List<MobileNumber> mobileNumbers;
 
 }

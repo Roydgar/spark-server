@@ -16,12 +16,11 @@ public class SparkServerApplication {
 
     public static void main(String[] args){
         SpringApplication.run(SparkServerApplication.class, args);
-        sendLoginRequest();
     }
 
 
     private static void sendRegisterRequest() {
-        sendRequest("http://localhost:8080/user/register",
+        sendRequest("https://workshop-master-server.herokuapp.com/user/register",
                 "{\"name\":\"Vitysha\",\"surname\":\"Pups\",\"phone\":\"123213123\", \"password\":\"0000\", \"email\":\"roydgaryshka@gmail.com\",\"cars\":[{\"brand\":\"sfasf\",\"model\":\"asasf\"}]}");
     }
 
