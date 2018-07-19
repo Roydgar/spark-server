@@ -1,20 +1,14 @@
 package tk.roydgar.config;
 
-import com.fasterxml.jackson.databind.Module;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import tk.roydgar.util.SmtpMailSender;
 import tk.roydgar.util.StringHasher;
 
@@ -29,6 +23,7 @@ import static tk.roydgar.util.constants.FilePaths.MAIL_PROPERTIES;
 
 
 @Configuration
+@EnableTransactionManagement
 @ComponentScan(DEFAULT_PACKAGE)
 @PropertySource(APPLICATION_PROPERTIES)
 @PropertySource(DATABASE_PROPERTIES )
