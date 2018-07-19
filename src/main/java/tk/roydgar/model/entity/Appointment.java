@@ -30,11 +30,11 @@ public class Appointment {
     private LocalDateTime time;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "appointment", cascade = CascadeType.ALL)
-    private List<Service> services;
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "appointment", cascade = CascadeType.ALL)
+//    private List<Service> services;
 
     @Transient
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

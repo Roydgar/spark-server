@@ -68,7 +68,7 @@ public class AppointmentService {
             service.ifPresent(appointmentServices::add);
         }
 
-        appointment.setServices(appointmentServices);
+        //appointment.setServices(appointmentServices);
 
         logger.info("save() call; SUCCESS; client id = " + clientId);
         return appointmentRepository.save(appointment);
