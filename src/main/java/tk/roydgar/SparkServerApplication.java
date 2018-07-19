@@ -16,14 +16,20 @@ public class SparkServerApplication {
 
     public static void main(String[] args){
         SpringApplication.run(SparkServerApplication.class, args);
+        sendLoginRequest();
     }
 
 
     private static void sendRegisterRequest() {
         sendRequest("http://localhost:8080/user/register",
-                "{\"name\":\"vit\",\"surname\":\"pups\",\"phone\":\"22299\",\"email\":\"roydgaryshka@gmail.com\", \"password\":\"1233\",\"car\":{\"carBrand\":\"saf\",\"carModel\":\"sfa\"}}");
+                "{\"name\":\"Vitysha\",\"surname\":\"Pups\",\"phone\":\"123213123\", \"password\":\"0000\", \"email\":\"roydgaryshka@gmail.com\",\"cars\":[{\"brand\":\"sfasf\",\"model\":\"asasf\"}]}");
     }
-	private static void sendRequest(String myUrl, String json) {
+
+    private static void sendLoginRequest() {
+        sendRequest("http://localhost:8080/user/login",
+                "{\"email\":\"roydgaryshk3a@gmail.com\", \"password\":\"0000\"}");
+    }
+    private static void sendRequest(String myUrl, String json) {
         try {
             URL url = new URL(myUrl);
             URLConnection con = url.openConnection();
@@ -46,4 +52,5 @@ public class SparkServerApplication {
 
         }
     }
+
 }
