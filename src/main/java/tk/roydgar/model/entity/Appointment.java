@@ -1,6 +1,5 @@
 package tk.roydgar.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import tk.roydgar.model.entity.client.Client;
@@ -9,6 +8,7 @@ import tk.roydgar.model.entity.user.User;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Getter @Setter
@@ -33,10 +33,12 @@ public class Appointment {
     @JoinColumn(name = "customer_id")
     private User user;
 
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "service_id")
-    @JsonProperty("service")
-    private Service service;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "appointment", cascade = CascadeType.ALL)
+    private List<Service> services;
+
+    @Transient
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<Long> servicesId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id", nullable = false)
