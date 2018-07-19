@@ -28,11 +28,10 @@ public class AppointmentController {
         return appointmentService.findByDateAndClientId(clientId, date);
     }
 
-    @PostMapping("addAppointment/{clientId}/{serviceId}")
+    @PostMapping("addAppointment/{clientId}")
     public @ResponseBody Appointment saveAppointment(@PathVariable Long clientId,
-                                                     @PathVariable Long serviceId,
                                                      @RequestBody Appointment appointment) {
-        return appointmentService.save(appointment, clientId, serviceId);
+        return appointmentService.save(appointment, clientId);
     }
 
 }

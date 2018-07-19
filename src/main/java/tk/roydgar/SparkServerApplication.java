@@ -16,6 +16,7 @@ public class SparkServerApplication {
 
     public static void main(String[] args){
         SpringApplication.run(SparkServerApplication.class, args);
+        //sendRegisterRequest();
     }
 
 
