@@ -24,7 +24,7 @@ public class UserService {
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public User login(LoginData loginData) {
-        String email = loginData.getEmail();
+        String email = loginData.getEmail().toLowerCase();
         String password = loginData.getPassword();
 
         Optional<User> user = userRepository.findByEmail(email);
@@ -61,6 +61,7 @@ public class UserService {
 //        }
 
         user.setPassword(HashUtil.hash(user.getEmail().concat(user.getPassword())));
+        user.setEmail(user.getEmail().toLowerCase());
         User savedUser = userRepository.save(user);
 
         smtpMailSender.send(user.getEmail(),
