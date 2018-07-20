@@ -13,9 +13,13 @@ public class ClientController {
 
     private ClientService clientService;
 
-    @GetMapping("/client/{clientName}")
+    @GetMapping("/client/name/{clientName}")
     public @ResponseBody Client findByName(@PathVariable String clientName) {
         return clientService.findByName(clientName);
     }
 
+    @GetMapping("/client/id/{clientId}")
+    public @ResponseBody Client findById(@PathVariable Long clientId) {
+        return clientService.findById(clientId);
+    }
 }

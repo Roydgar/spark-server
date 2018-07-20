@@ -28,6 +28,10 @@ public class Advantage {
     @Column(nullable = false)
     String text;
 
+    @NotNull
+    @Column(name = "picture_url", nullable = false)
+    String pircureURL;
+
     @ManyToOne(cascade= CascadeType.ALL)
     @JoinColumn(name = "client_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

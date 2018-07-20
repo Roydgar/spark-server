@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.roydgar.model.entity.client.Client;
 import tk.roydgar.model.repository.ClientRepository;
 
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 public class ClientService {
@@ -19,6 +21,12 @@ public class ClientService {
     public Client findByName(String name) {
         logger.info("findByName() call; name = " + name);
         return clientRepository.findByName(name);
+    }
+
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    public Client findById(Long clientId) {
+        Optional<Client> client = clientRepository.findById(clientId);
+        return client.orElse(null);
     }
 
 }

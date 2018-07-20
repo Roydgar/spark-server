@@ -20,10 +20,11 @@ public class CommentController {
         return commentService.findByClientId(clientId);
     }
 
-    @PostMapping("/addComment/{clientId}")
+    @PostMapping("/addComment/{clientId}/{userId}")
     public @ResponseBody Comment saveComment(@RequestBody Comment comment,
-                                             @PathVariable Long clientId) {
-        return commentService.save(comment, clientId);
+                                             @PathVariable Long clientId,
+                                             @PathVariable Long userId) {
+        return commentService.save(comment, clientId, userId);
     }
 
 }
