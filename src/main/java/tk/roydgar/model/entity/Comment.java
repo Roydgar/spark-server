@@ -64,6 +64,7 @@ public class Comment {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable
+    @JsonIgnore
     List<User> votedUsers;
 
 }
