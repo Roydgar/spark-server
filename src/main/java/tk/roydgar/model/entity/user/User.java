@@ -1,7 +1,9 @@
 package tk.roydgar.model.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import tk.roydgar.model.entity.Comment;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

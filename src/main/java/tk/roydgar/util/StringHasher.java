@@ -54,7 +54,7 @@ public class StringHasher {
     {
         StringHasher td= new StringHasher();
 
-        String target="sadfdfasdaf12312312";
+        String target="root";
         String encrypted=td.encrypt(target);
         String decrypted=td.decrypt(encrypted);
 

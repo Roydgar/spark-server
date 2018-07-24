@@ -11,6 +11,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter @Setter
 @EqualsAndHashCode
@@ -60,5 +61,9 @@ public class Comment {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable
+    List<User> votedUsers;
 
 }

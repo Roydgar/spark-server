@@ -46,4 +46,61 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
+
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    public List<Comment> findCommentReplays(Long clientId) {
+        return commentRepository.findAllByClientIdAndParentIdGreaterThan(clientId, 0L);
+    }
+
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    public List<Comment> findCommentParents(Long clientId) {
+        return commentRepository.findAllByClientIdAndParentIdEquals(clientId, 0L);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public Comment updatePositiveRating(Long commentId, Long userId) {
+
+        Optional<Comment> optionalComment = commentRepository.findById(commentId);
+        Optional<User> optionalUser = userRepository.findById(userId);
+
+        if (!optionalComment.isPresent() || ! optionalUser.isPresent()) {
+            return null;
+        }
+
+        Comment comment = optionalComment.get();
+        User user = optionalUser.get();
+
+        if (comment.getVotedUsers().contains(user)) {
+            return null;
+        }
+
+        comment.setPositiveRating(comment.getPositiveRating() + 1);
+        comment.getVotedUsers().add(user);
+
+        return commentRepository.save(comment);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public Comment updateNegativeRating(Long commentId, Long userId) {
+
+        Optional<Comment> optionalComment = commentRepository.findById(commentId);
+        Optional<User> optionalUser = userRepository.findById(userId);
+
+        if (!optionalComment.isPresent() || ! optionalUser.isPresent()) {
+            return null;
+        }
+
+        Comment comment = optionalComment.get();
+        User user = optionalUser.get();
+
+        if (comment.getVotedUsers().contains(user)) {
+            return null;
+        }
+
+        comment.setNegativeRating(comment.getNegativeRating() + 1);
+        comment.getVotedUsers().add(user);
+
+        return commentRepository.save(comment);
+    }
+
 }

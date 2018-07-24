@@ -20,11 +20,33 @@ public class CommentController {
         return commentService.findByClientId(clientId);
     }
 
-    @PostMapping("/addComment/{clientId}/{userId}")
+    @PostMapping("/comment/{clientId}/{userId}")
     public @ResponseBody Comment saveComment(@RequestBody Comment comment,
                                              @PathVariable Long clientId,
                                              @PathVariable Long userId) {
         return commentService.save(comment, clientId, userId);
+    }
+
+    @GetMapping("/comment/replays/{clientId}")
+    public @ResponseBody List<Comment> findCommentReplays(@PathVariable Long clientId){
+        return commentService.findCommentReplays(clientId);
+    }
+
+    @GetMapping("/comment/parents{clientId}")
+    public @ResponseBody List<Comment> findCommentParents(@PathVariable Long clientId){
+        return commentService.findCommentParents(clientId);
+    }
+
+    @PostMapping("comment/thumb-up/{commentId}/{votedUserId}")
+    public @ResponseBody Comment updatePositiveRating(@PathVariable Long commentId,
+                                                      @PathVariable Long votedUserId) {
+        return commentService.updatePositiveRating(commentId, votedUserId);
+    }
+
+    @PostMapping("comment/thumb-down/{commentId}/{votedUserId}")
+    public @ResponseBody Comment updateNegativeRating(@PathVariable Long commentId,
+                                                      @PathVariable Long votedUserId) {
+        return commentService.updateNegativeRating(commentId, votedUserId);
     }
 
 }
