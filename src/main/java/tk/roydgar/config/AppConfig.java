@@ -43,13 +43,38 @@ public class AppConfig {
     }
 
     @Bean
-    public DataSource dataSource() {
-        StringHasher hasher = new StringHasher();
+    @Autowired
+    public DataSource dataSource(StringHasher hasher) {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
         dataSource.setUrl(hasher.decrypt(environment.getProperty("heroku.url")));
         dataSource.setUsername(hasher.decrypt(environment.getProperty("heroku.username")));
         dataSource.setPassword(hasher.decrypt(environment.getProperty("heroku.password")));
+        dataSource.setDriverClassName(hasher.decrypt(environment.getProperty("driver")));
+        return dataSource;
+    }
+
+    @Bean
+    @Autowired
+    public DataSource homeLocalDataSource(StringHasher hasher) {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+
+        dataSource.setUrl(hasher.decrypt(environment.getProperty("local.home.url")));
+        dataSource.setUsername(hasher.decrypt(environment.getProperty("local.home.username")));
+        dataSource.setPassword(hasher.decrypt(environment.getProperty("local.home.password")));
+        dataSource.setDriverClassName(hasher.decrypt(environment.getProperty("driver")));
+        return dataSource;
+    }
+
+    @Bean
+    @Autowired
+    @Primary
+    public DataSource workLocalDataSource(StringHasher hasher) {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+
+        dataSource.setUrl(hasher.decrypt(environment.getProperty("local.work.url")));
+        dataSource.setUsername(hasher.decrypt(environment.getProperty("local.work.username")));
+        dataSource.setPassword(hasher.decrypt(environment.getProperty("local.work.password")));
         dataSource.setDriverClassName(hasher.decrypt(environment.getProperty("driver")));
         return dataSource;
     }
