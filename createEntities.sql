@@ -1,3 +1,5 @@
+INSERT INTO client VALUES (2,  'royd@mail.ru', 'client', 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png' ,'sto', '$2a$12$1hiwzi6gw/vZiDMzpbH5weNr2F7ZdnlazVq5vW0saVyWm.PwdyxWW', now());
+
 INSERT INTO mobile_number VALUES (2, '88055535', 'MTC', 2);
 INSERT INTO mobile_number VALUES (3, '51241253', 'LIFE', 2);
 
@@ -37,3 +39,4 @@ INSERT INTO service VALUES (3, 'Custom Service. This service doesnt take much ti
 INSERT INTO service VALUES (4, 'Try to do Service. This service doesnt take much time. We help you do smth', 70, 'service 3', 2000, 2);
 INSERT INTO service VALUES (5, 'Service.This service doesnt take much time. We help you do smth', 110, 'service 4', 3000, 2);
 INSERT INTO service VALUES (7, 'This service takes a lot time to do, it will cost you some money, but you can always take a credit to do this service. Your car will be happy to get this, becouse youre a good boy.', 110, 'Advanced full repair', 3000, 2);
+

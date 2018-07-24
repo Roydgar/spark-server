@@ -18,7 +18,7 @@ public class CommentController {
         return commentService.findByClientId(clientId);
     }
 
-    @PostMapping("/comment/{clientId}/{userId}")
+    @PostMapping("/comment/save/{clientId}/{userId}")
     public ResponseEntity<?> saveComment(@RequestBody Comment comment,
                                          @PathVariable Long clientId,
                                          @PathVariable Long userId) {
