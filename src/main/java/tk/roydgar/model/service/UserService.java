@@ -1,10 +1,8 @@
 package tk.roydgar.model.service;
 
-import com.google.common.collect.ImmutableMap;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +16,7 @@ import tk.roydgar.util.SmtpMailSender;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.*;
+import static tk.roydgar.util.HttpHeadersUtil.httpHeaders;
 import static tk.roydgar.util.ResponseEntityUtil.responseEntityFromOptional;
 import static tk.roydgar.util.constants.HeaderMessages.*;
 
@@ -45,7 +44,7 @@ public class UserService {
             logger.info("login() call; FAILURE ; user with given email doesn't exist; " +
                     "loginData = " + loginData);
             return new ResponseEntity<>(
-                    ImmutableMap.of(HEADER_KEY, USER_EMAIL_DOESNT_EXIST), UNAUTHORIZED);
+                    httpHeaders(HEADER_KEY, USER_EMAIL_DOESNT_EXIST), UNAUTHORIZED);
         }
 
         User loggedUser = user.get();
@@ -55,7 +54,7 @@ public class UserService {
             logger.info("login() call; FAILURE ; user didn't confirm his email; " +
                     "loginData = " + loginData +"l; user = " + loggedUser);
             return new ResponseEntity<>(
-                    ImmutableMap.of(HEADER_KEY, USER_EMAIL_WASNT_CONFIRMED), UNAUTHORIZED);
+                    httpHeaders(HEADER_KEY, USER_EMAIL_WASNT_CONFIRMED), UNAUTHORIZED);
         }
 
         if (HashUtil.check(email.concat(password), loggedUser.getPassword())) {
@@ -65,13 +64,13 @@ public class UserService {
 
         logger.info("login() call; FAILURE ; password is incorrect;" +
                 "loginData = " + loginData);
-        return new ResponseEntity<>(ImmutableMap.of(HEADER_KEY, USER_WRONG_PASSWORD), UNAUTHORIZED);
+        return new ResponseEntity<>(httpHeaders(HEADER_KEY, USER_WRONG_PASSWORD), UNAUTHORIZED);
     }
 
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<?> register(User user) {
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            return new ResponseEntity<>(ImmutableMap.of(HEADER_KEY, USER_EXIST), CONFLICT);
+            return new ResponseEntity<>(httpHeaders(HEADER_KEY, USER_EXIST), CONFLICT);
         }
 
         user.setPassword(HashUtil.hash(user.getEmail().concat(user.getPassword())));
@@ -85,7 +84,7 @@ public class UserService {
                         + savedUser.getId() + "/" +
                         savedUser.getName());
 
-        logger.info("regiser() call; SUCCESS; savedUser = " + savedUser);
+        logger.info("register() call; SUCCESS; savedUser = " + savedUser);
         return new ResponseEntity<>(savedUser, OK);
     }
 
@@ -96,7 +95,7 @@ public class UserService {
         if (!tempUser.isPresent()) {
             logger.info("confirmEmail() call; FAILURE; incorrect user id; userId = "
                 + userId + "; hash = " + hash);
-            return new ResponseEntity<>(ImmutableMap.of(HEADER_KEY, USER_NOT_FOUND), BAD_REQUEST);
+            return new ResponseEntity<>(httpHeaders(HEADER_KEY, ENTITIES_NOT_FOUND), BAD_REQUEST);
         }
 
         User user = tempUser.get();
@@ -104,13 +103,13 @@ public class UserService {
         if (hash.equals(user.getName()) && user.getStatus() == User.Status.GUEST) {
             user.setStatus(User.Status.CONFIRMED);
             User savedUser = userRepository.save(user);
-            logger.info("confrimEmail() call; SUCCESS; confirmedUser = " + user);
+            logger.info("confirmEmail() call; SUCCESS; confirmedUser = " + user);
             return new ResponseEntity<>(savedUser, OK);
         }
 
         logger.info("confirmEmail() call; FAILURE; incorrect hash or already confirmed; userId = "
                 + userId + "; hash = " + hash + "; user = " + user);
-        return new ResponseEntity<>(ImmutableMap.of(HEADER_KEY, EMAIL_CONFIRMATION_ERROR), BAD_REQUEST);
+        return new ResponseEntity<>(httpHeaders(HEADER_KEY, EMAIL_CONFIRMATION_ERROR), BAD_REQUEST);
     }
 
 }

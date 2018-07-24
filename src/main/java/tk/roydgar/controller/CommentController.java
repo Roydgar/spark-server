@@ -2,14 +2,10 @@ package tk.roydgar.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import tk.roydgar.model.entity.Comment;
 import tk.roydgar.model.service.CommentService;
-
-import java.util.List;
 
 @RestController
 @AllArgsConstructor(onConstructor = @__(@Autowired))

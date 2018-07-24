@@ -1,6 +1,5 @@
 package tk.roydgar.model.service;
 
-import com.google.common.collect.ImmutableMap;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,9 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.http.HttpStatus.*;
+import static tk.roydgar.util.HttpHeadersUtil.httpHeaders;
 import static tk.roydgar.util.ResponseEntityUtil.responseEntityFromList;
+import static tk.roydgar.util.constants.HeaderMessages.ENTITIES_NOT_FOUND;
 import static tk.roydgar.util.constants.HeaderMessages.HEADER_KEY;
 import static tk.roydgar.util.constants.HeaderMessages.USER_VOTED_COMMENT;
 
@@ -49,7 +50,7 @@ public class CommentService {
         if (!client.isPresent() || !user.isPresent()) {
             logger.info("save() call; FAILURE; client or user not found; clientId = " + client
                 +"; userId = " + userId);
-            return new ResponseEntity<>(BAD_REQUEST);
+            return new ResponseEntity<>(httpHeaders(HEADER_KEY, ENTITIES_NOT_FOUND), BAD_REQUEST);
         }
 
         comment.setClient(client.get());
@@ -81,7 +82,7 @@ public class CommentService {
         if (!optionalComment.isPresent() || ! optionalUser.isPresent()) {
             logger.info("updatePositiveRating() call; FAILURE; comment or user not found;" +
                     "commentId = " + commentId + "userId = " + userId);
-            return new ResponseEntity<>(BAD_REQUEST);
+            return new ResponseEntity<>(httpHeaders(HEADER_KEY, ENTITIES_NOT_FOUND), BAD_REQUEST);
         }
 
         Comment comment = optionalComment.get();
@@ -90,7 +91,7 @@ public class CommentService {
         if (comment.getVotedUsers().contains(user)) {
             logger.info("updatePositiveRating() call; FAILURE; User voted for this comment;" +
                     "commentId = " + commentId + "userId = " + userId);
-            return new ResponseEntity<>(ImmutableMap.of(HEADER_KEY, USER_VOTED_COMMENT), BAD_REQUEST);
+            return new ResponseEntity<>(httpHeaders(HEADER_KEY, USER_VOTED_COMMENT), FORBIDDEN);
         }
 
         comment.setPositiveRating(comment.getPositiveRating() + 1);
@@ -110,7 +111,7 @@ public class CommentService {
         if (!optionalComment.isPresent() || ! optionalUser.isPresent()) {
             logger.info("updateNegativeRating() call; FAILURE; comment or user not found;" +
                     "commentId = " + commentId + "userId = " + userId);
-            return new ResponseEntity<>(BAD_REQUEST);
+            return new ResponseEntity<>(httpHeaders(HEADER_KEY, ENTITIES_NOT_FOUND), BAD_REQUEST);
         }
 
         Comment comment = optionalComment.get();
@@ -119,7 +120,7 @@ public class CommentService {
         if (comment.getVotedUsers().contains(user)) {
             logger.info("updateNegativeRating() call; FAILURE; User voted for this comment;" +
                     "commentId = " + commentId + "userId = " + userId);
-            return new ResponseEntity<>(ImmutableMap.of(HEADER_KEY, USER_VOTED_COMMENT), BAD_REQUEST);
+            return new ResponseEntity<>(httpHeaders(HEADER_KEY, USER_VOTED_COMMENT), FORBIDDEN);
         }
 
         comment.setNegativeRating(comment.getNegativeRating() + 1);
