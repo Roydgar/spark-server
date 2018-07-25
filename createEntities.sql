@@ -25,13 +25,13 @@ INSERT INTO user VALUES (2, 'royd@mail.ua', 'Vitia', 'password', '052553', 'GUES
 
 INSERT INTO user VALUES (3, 'roydgaryhska@gmail.com', 'Vanya', 'password', '052553', 'GUEST', 'Pups');
 
-INSERT INTO user VALUES (4, 'vit@gmail.com', 'Afanasiy', '$2a$12$xFBBGoxaIHa2vOqBubSmuuMV/yveq8guHtuJmqSnCgxIcF9SlgTuC', '23423423425', 'CONFIRMED', 'Pups');
+INSERT INTO comment VALUES (2, 5, 0, 0, 0, 2, 'Positive cool comment so you can read it and watch cool news also what do i write', now(), 2, 2);
 
-INSERT INTO comment VALUES (2, 5, 0, 0, 0, 'Positive cool comment so you can read it and watch cool news also what do i write', now(), 2, 2);
+INSERT INTO comment VALUES (3, 5, 0, 2, 0, 0, 'Five stars! Amazing. Thanks!', now(), 2, 2);
 
-INSERT INTO comment VALUES (3, 5, 0, 2, 0, 'some text', now(), 2, 2);
+INSERT INTO comment VALUES (4, 4, 0, 0, 0, 0, 'Good! Would recommend to my friends', now(), 2, 3);
 
-INSERT INTO comment VALUES (4, 5, 0, 0, 0, 'some other cool text', now(), 2, 3);
+INSERT INTO comment VALUES (5, 4, 0, 2, 0, 0, 'Very cool service! Nice prices!', now(), 2, 2);
 
 INSERT INTO car VALUES(2, 'Mercedes', 'T1000', 2);
 INSERT INTO car VALUES(3, 'Ferrari', 'f12', 2);
@@ -41,5 +41,4 @@ INSERT INTO service VALUES (3, 'Custom Service. This service doesnt take much ti
 INSERT INTO service VALUES (4, 'Try to do Service. This service doesnt take much time. We help you do smth', 70, 'service 3', 2000, 2);
 INSERT INTO service VALUES (5, 'Service.This service doesnt take much time. We help you do smth', 110, 'service 4', 3000, 2);
 INSERT INTO service VALUES (7, 'This service takes a lot time to do, it will cost you some money, but you can always take a credit to do this service. Your car will be happy to get this, becouse youre a good boy.', 110, 'Advanced full repair', 3000, 2);
-
 

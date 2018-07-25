@@ -50,6 +50,10 @@ public class Comment {
     private Integer negativeRating = 0;
 
     @NotNull
+    @Column(name = "replay_count", nullable = false)
+    private Integer replayCount = 0;
+
+    @NotNull
     @Column(name = "time", nullable = false, updatable = false)
     private LocalDateTime time;
 

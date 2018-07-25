@@ -12,8 +12,7 @@ public interface CommentRepository extends CrudRepository<Comment, Long> {
 
     List<Comment> findAllByClientId(Long client_client_id);
 
-    List<Comment> findAllByClientIdAndParentIdEquals(Long clientId, Long id);
 
-    List<Comment> findAllByClientIdAndParentIdGreaterThan(Long clientId, Long parentId);
+    List<Comment> findAllByParentId(Long parentId);
 
 }

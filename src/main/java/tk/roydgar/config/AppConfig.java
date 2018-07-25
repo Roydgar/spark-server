@@ -45,7 +45,7 @@ public class AppConfig {
     @Bean
     @Autowired
     @Primary
-    public DataSource dataSource(StringHasher hasher) {
+    public DataSource herokuDataSource(StringHasher hasher) {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
         dataSource.setUrl(hasher.decrypt(environment.getProperty("heroku.url")));
@@ -69,6 +69,7 @@ public class AppConfig {
 
     @Bean
     @Autowired
+
     public DataSource workLocalDataSource(StringHasher hasher) {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 

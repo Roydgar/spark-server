@@ -56,22 +56,30 @@ public class CommentService {
         comment.setClient(client.get());
         comment.setUser(user.get());
 
+        if (comment.getParentId() != 0) {
+            Optional<Comment> parentComment = commentRepository.findById(comment.getParentId());
+
+            if (!parentComment.isPresent()) {
+                return new ResponseEntity<>(httpHeaders(HEADER_KEY, ENTITIES_NOT_FOUND), BAD_REQUEST);
+            } else {
+                Comment foundedParentComment = parentComment.get();
+                foundedParentComment.setReplayCount(foundedParentComment.getReplayCount() + 1);
+                commentRepository.save(foundedParentComment);
+            }
+
+        }
+
         logger.info("save() call; SUCCESS.");
         return new ResponseEntity<>(commentRepository.save(comment), OK);
     }
 
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public ResponseEntity<?> findCommentReplays(Long clientId) {
+    public ResponseEntity<?> findCommentReplays(Long parentCommentId) {
         return responseEntityFromList(
-                commentRepository.findAllByClientIdAndParentIdGreaterThan(clientId, 0L));
+                commentRepository.findAllByParentId(parentCommentId));
     }
 
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public ResponseEntity<?> findCommentParents(Long clientId) {
-        return responseEntityFromList(
-                commentRepository.findAllByClientIdAndParentIdEquals(clientId, 0L));
-    }
 
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<?> updatePositiveRating(Long commentId, Long userId) {
