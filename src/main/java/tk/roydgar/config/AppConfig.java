@@ -50,6 +50,7 @@ public class AppConfig {
 
     @Bean
     @Autowired
+    @Primary
     public DataSource herokuDataSource(StringHasher hasher) {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
@@ -74,7 +75,6 @@ public class AppConfig {
 
     @Bean
     @Autowired
-    @Primary
     public DataSource workLocalDataSource(StringHasher hasher) {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
