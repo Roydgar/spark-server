@@ -23,18 +23,20 @@ INSERT INTO news VALUES (2, 'Some cool news here you can see a lot of text ', 'h
 
 INSERT INTO user VALUES (2, 'royd@mail.ua', 'Vitia', 'password', '052553', 'GUEST', 'Bolgov');
 
-INSERT INTO user VALUES (3, 'roydgaryhska@gmail.com', 'Vanya', 'password', '052553', 'GUEST', 'Pups');
+INSERT INTO user VALUES (3, 'roydgaryhs@gmail.com', 'Vanya', 'password', '052553', 'GUEST', 'Pups');
+
+INSERT INTO user VALUES (4, 'vit@mail.ru', 'Vitia', '$2a$12$sLuTeMYkCBsNz9RGuLBb7OdPUhpjb6iihMsGPMUnprFIll2G4C3lm', '052553', 'CONFIRMED', 'Bolgov');
 
 INSERT INTO comment VALUES (2, 5, 0, 0, 0, 2, 'Positive cool comment so you can read it and watch cool news also what do i write', now(), 2, 2);
 
-INSERT INTO comment VALUES (3, 5, 0, 2, 0, 0, 'Five stars! Amazing. Thanks!', now(), 2, 2);
+INSERT INTO comment VALUES (3, 5, 0, 2, 0, 0, 'some text', now(), 2, 2);
 
-INSERT INTO comment VALUES (4, 4, 0, 0, 0, 0, 'Good! Would recommend to my friends', now(), 2, 3);
+INSERT INTO comment VALUES (4, 5, 0, 0, 0, 0, 'some other cool text', now(), 2, 3);
 
 INSERT INTO comment VALUES (5, 4, 0, 2, 0, 0, 'Very cool service! Nice prices!', now(), 2, 2);
 
-INSERT INTO car VALUES(2, 'Mercedes', 'T1000', 2);
-INSERT INTO car VALUES(3, 'Ferrari', 'f12', 2);
+INSERT INTO car VALUES(2, 'Mercedes', 'T1000');
+INSERT INTO car VALUES(3, 'Ferrari', 'f12');
 
 INSERT INTO service VALUES (2,  'Custom Service. This service doesnt take much time. We help you do smth',30, 'service 1', 5000, 2);
 INSERT INTO service VALUES (3, 'Custom Service. This service doesnt take much time. We help you do smth', 45, 'service 2', 1000, 2);

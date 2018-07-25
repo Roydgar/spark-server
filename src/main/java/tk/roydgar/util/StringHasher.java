@@ -54,7 +54,7 @@ public class StringHasher {
     {
         StringHasher td= new StringHasher();
 
-        String target="root";
+        String target="Vitia@mail.ua";
         String encrypted=td.encrypt(target);
         String decrypted=td.decrypt(encrypted);
 

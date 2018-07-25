@@ -13,50 +13,8 @@ import java.nio.charset.StandardCharsets;
 @SpringBootApplication
 public class SparkServerApplication {
 
-
     public static void main(String[] args){
         SpringApplication.run(SparkServerApplication.class, args);
-        //sendRegisterRequest();
-    }
-
-
-    private static void sendRegisterRequest() {
-        sendRequest("https://workshop-master-server.herokuapp.com/user/register",
-                "{\"name\":\"Vitysha\",\"surname\":\"Pups\",\"phone\":\"123213123\", \"password\":\"0000\", \"email\":\"roydgaryshka@gmail.com\",\"cars\":[{\"brand\":\"sfasf\",\"model\":\"asasf\"}]}");
-    }
-
-    private static void sendLoginRequest() {
-        sendRequest("http://localhost:8080/user/login",
-                "{\"email\":\"roydgaryshk3a@gmail.com\", \"user\":" +
-                        "{\"name\":\"Vitysha\",\"surname\":\"Pups\",\"phone\":\"123213123\", \"email\":\"roydgaryshka@gmail.com\",\"cars\":[{\"brand\":\"sfasf\",\"model\":\"asasf\"}]}}");
-    }
-
-    private static void sendAppointmentRequest() {
-        sendRequest("http://localhost:8080/user/addAppointment/2",
-                "{\"time\":\"2018-07-19T11:11:01\", \"user\":\"0000\"}");
-    }
-    private static void sendRequest(String myUrl, String json) {
-        try {
-            URL url = new URL(myUrl);
-            URLConnection con = url.openConnection();
-            HttpURLConnection http = (HttpURLConnection) con;
-            http.setRequestMethod("POST"); // PUT is another valid option
-            http.setDoOutput(true);
-
-
-            //byte[] out = "{\"time\":[2018, 7, 18, 12, 0], \"customer\": { \"phone\" : \"239892937r8\",  \"name\" : \"Uebashka\",  \"surname\" : \"678\", \"email\" : \"fee@MAIL.com\"}}".getBytes(StandardCharsets.UTF_8);
-            byte[] out = json.getBytes(StandardCharsets.UTF_8);
-            int length = out.length;
-
-            http.setFixedLengthStreamingMode(length);
-            http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-            http.connect();
-            try (OutputStream os = http.getOutputStream()) {
-                os.write(out);
-            }
-        } catch (Exception e) {
-
-        }
     }
 
 }

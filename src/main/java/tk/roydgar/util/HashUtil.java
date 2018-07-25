@@ -15,7 +15,7 @@ public class HashUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(hash("0000"));
+        System.out.println(hash("vit@mail.ru0000"));
     }
 
 }

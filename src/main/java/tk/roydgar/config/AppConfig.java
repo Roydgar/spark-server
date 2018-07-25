@@ -9,6 +9,11 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import tk.roydgar.util.SmtpMailSender;
 import tk.roydgar.util.StringHasher;
 
@@ -28,6 +33,7 @@ import static tk.roydgar.util.constants.FilePaths.MAIL_PROPERTIES;
 @PropertySource(APPLICATION_PROPERTIES)
 @PropertySource(DATABASE_PROPERTIES )
 @PropertySource(MAIL_PROPERTIES)
+@EnableSwagger2
 public class AppConfig {
 
     private Environment environment;
@@ -44,7 +50,6 @@ public class AppConfig {
 
     @Bean
     @Autowired
-    @Primary
     public DataSource herokuDataSource(StringHasher hasher) {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
@@ -69,7 +74,7 @@ public class AppConfig {
 
     @Bean
     @Autowired
-
+    @Primary
     public DataSource workLocalDataSource(StringHasher hasher) {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
@@ -108,6 +113,15 @@ public class AppConfig {
     @Bean
     public StringHasher stringHasher() {
         return new StringHasher();
+    }
+
+    @Bean
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
+                .build();
     }
 
 }
