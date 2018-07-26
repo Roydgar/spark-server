@@ -30,6 +30,11 @@ public class CommentController {
         return commentService.findCommentReplays(parentCommentId);
     }
 
+    @GetMapping("/comment/parents/{clientId}")
+    public ResponseEntity<?>  findCommentParents(@PathVariable Long clientId){
+        return commentService.findCommentParents(clientId);
+    }
+
 
     @PostMapping("comment/thumb-up/{commentId}/{votedUserId}")
     public ResponseEntity<?> updatePositiveRating(@PathVariable Long commentId,

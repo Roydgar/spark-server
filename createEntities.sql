@@ -35,8 +35,10 @@ INSERT INTO comment VALUES (4, 5, 0, 0, 0, 0, 'some other cool text', now(), 2, 
 
 INSERT INTO comment VALUES (5, 4, 0, 2, 0, 0, 'Very cool service! Nice prices!', now(), 2, 2);
 
-INSERT INTO car VALUES(2, 'Mercedes', 'T1000');
-INSERT INTO car VALUES(3, 'Ferrari', 'f12');
+INSERT INTO car VALUES(2, 'Mercedes', 'T1000', 2);
+INSERT INTO car VALUES(3, 'Ferrari', 'f12', 2);
+INSERT INTO car VALUES(4, 'BMV', 'X', 3);
+INSERT INTO car VALUES(5, 'Daevo', 'Lanos', 4);
 
 INSERT INTO service VALUES (2,  'Custom Service. This service doesnt take much time. We help you do smth',30, 'service 1', 5000, 2);
 INSERT INTO service VALUES (3, 'Custom Service. This service doesnt take much time. We help you do smth', 45, 'service 2', 1000, 2);

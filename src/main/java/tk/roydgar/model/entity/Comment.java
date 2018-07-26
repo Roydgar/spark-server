@@ -39,7 +39,7 @@ public class Comment {
     @Column(nullable = false)
     @Max(5)
     @Min(0)
-    private Integer mark;
+    private Integer mark = 0;
 
     @NotNull
     @Column(name = "positive_rating", nullable = false)

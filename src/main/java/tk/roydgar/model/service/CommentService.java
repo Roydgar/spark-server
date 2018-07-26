@@ -80,6 +80,11 @@ public class CommentService {
                 commentRepository.findAllByParentId(parentCommentId));
     }
 
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    public ResponseEntity<?> findCommentParents(Long clientId) {
+        return responseEntityFromList(
+                commentRepository.findAllByClientIdAndParentId(clientId, 0L));
+    }
 
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<?> updatePositiveRating(Long commentId, Long userId) {
