@@ -16,9 +16,9 @@ import tk.roydgar.model.repository.UserRepository;
 import tk.roydgar.model.repository.VoteRepository;
 import tk.roydgar.util.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.*;
 import static tk.roydgar.util.HttpHeadersUtil.httpHeaders;
@@ -40,6 +40,43 @@ public class CommentService {
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public ResponseEntity<?> findByClientId(Long clientId) {
         return responseEntityFromList(commentRepository.findAllByClientIdOrderByTimeDesc(clientId));
+    }
+
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    public ResponseEntity<?> findVotedCommentsByClientIdAndUserId(Long clientId, Long userId) {
+        List<Comment> comments = commentRepository.findAllByClientIdOrderByTimeDesc(clientId);
+
+        List<Comment> result = new ArrayList<>();
+        for (Comment comment : comments) {
+            if (commentVotesContainUserWithId(comment, comment.getVotes(), userId)) {
+                result.add(comment);
+            }
+        }
+
+        return responseEntityFromList(result);
+    }
+
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    public ResponseEntity<?> findNotVotedCommentsByClientIdAndUserId(Long clientId, Long userId) {
+        List<Comment> comments = commentRepository.findAllByClientIdOrderByTimeDesc(clientId);
+
+        List<Comment> result = new ArrayList<>();
+        for (Comment comment : comments) {
+            if (!commentVotesContainUserWithId(comment, comment.getVotes(), userId)) {
+                result.add(comment);
+            }
+        }
+
+        return responseEntityFromList(result);
+    }
+
+    private boolean commentVotesContainUserWithId(Comment comment, List<Vote> votes, Long userId) {
+        for (Vote vote : comment.getVotes()) {
+            if (vote.getUser().getId().equals(userId)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Transactional(rollbackFor = Exception.class)

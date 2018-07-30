@@ -48,4 +48,16 @@ public class CommentController {
         return commentService.updateNegativeRating(commentId, votedUserId);
     }
 
+    @GetMapping("/comment/voted/{clientId}/{userId}")
+    public ResponseEntity<?>  findCommentsVotedByUser(@PathVariable Long clientId ,
+                                                 @PathVariable Long userId){
+        return commentService.findVotedCommentsByClientIdAndUserId(clientId, userId);
+    }
+
+    @GetMapping("/comment/not-voted/{clientId}/{userId}")
+    public ResponseEntity<?>  findCommentNotVotedByUser(@PathVariable Long clientId,
+                                                 @PathVariable Long userId){
+        return commentService.findNotVotedCommentsByClientIdAndUserId(clientId, userId);
+    }
+
 }
