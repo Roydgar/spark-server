@@ -1,4 +1,4 @@
-package tk.roydgar.model.entity;
+package tk.roydgar.model.entity.comment;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -66,9 +66,8 @@ public class Comment {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
     @JsonIgnore
-    List<User> votedUsers;
+    List<Vote> votes;
 
 }

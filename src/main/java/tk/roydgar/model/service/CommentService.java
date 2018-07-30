@@ -3,20 +3,22 @@ package tk.roydgar.model.service;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tk.roydgar.model.entity.Comment;
+import tk.roydgar.model.entity.comment.Comment;
 import tk.roydgar.model.entity.client.Client;
+import tk.roydgar.model.entity.comment.Vote;
 import tk.roydgar.model.entity.user.User;
 import tk.roydgar.model.repository.ClientRepository;
 import tk.roydgar.model.repository.CommentRepository;
 import tk.roydgar.model.repository.UserRepository;
+import tk.roydgar.model.repository.VoteRepository;
 import tk.roydgar.util.Utils;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.*;
 import static tk.roydgar.util.HttpHeadersUtil.httpHeaders;
@@ -32,11 +34,12 @@ public class CommentService {
     private CommentRepository commentRepository;
     private ClientRepository clientRepository;
     private UserRepository userRepository;
+    private VoteRepository voteRepository;
     private Logger logger;
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public ResponseEntity<?> findByClientId(Long clientId) {
-        return responseEntityFromList(commentRepository.findAllByClientId(clientId));
+        return responseEntityFromList(commentRepository.findAllByClientIdOrderByTimeDesc(clientId));
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -50,7 +53,7 @@ public class CommentService {
         if (!client.isPresent() || !user.isPresent()) {
             logger.info("save() call; FAILURE; client or user not found; clientId = " + client
                 +"; userId = " + userId);
-            return new ResponseEntity<>(httpHeaders(HEADER_KEY, ENTITIES_NOT_FOUND), BAD_REQUEST);
+            return new ResponseEntity<>(httpHeaders(HEADER_KEY, ENTITIES_NOT_FOUND), NOT_FOUND);
         }
 
         comment.setClient(client.get());
@@ -60,7 +63,7 @@ public class CommentService {
             Optional<Comment> parentComment = commentRepository.findById(comment.getParentId());
 
             if (!parentComment.isPresent()) {
-                return new ResponseEntity<>(httpHeaders(HEADER_KEY, ENTITIES_NOT_FOUND), BAD_REQUEST);
+                return new ResponseEntity<>(httpHeaders(HEADER_KEY, ENTITIES_NOT_FOUND), NOT_FOUND);
             } else {
                 Comment foundedParentComment = parentComment.get();
                 foundedParentComment.setReplayCount(foundedParentComment.getReplayCount() + 1);
@@ -95,23 +98,41 @@ public class CommentService {
         if (!optionalComment.isPresent() || ! optionalUser.isPresent()) {
             logger.info("updatePositiveRating() call; FAILURE; comment or user not found;" +
                     "commentId = " + commentId + "userId = " + userId);
-            return new ResponseEntity<>(httpHeaders(HEADER_KEY, ENTITIES_NOT_FOUND), BAD_REQUEST);
+            return new ResponseEntity<>(httpHeaders(HEADER_KEY, ENTITIES_NOT_FOUND), NOT_FOUND);
         }
 
         Comment comment = optionalComment.get();
         User user = optionalUser.get();
 
-        if (comment.getVotedUsers().contains(user)) {
+        Optional<Vote> vote = voteRepository.findByUserIdAndCommentId(userId, commentId);
+
+        if (!vote.isPresent()) {
+            Vote newVote = Vote.builder().user(user).comment(comment).type(Vote.TYPE.THUMB_UP).build();
+            voteRepository.save(newVote);
+
+            comment.getVotes().add(newVote);
+            comment.setPositiveRating(comment.getPositiveRating() + 1);
+            Comment savedComment = commentRepository.save(comment);
+
+            logger.info("updatePositiveRating() call; SUCCESS");
+            return new ResponseEntity<>(savedComment, OK);
+        }
+
+        Vote foundedVote = vote.get();
+
+        if (foundedVote.getType() == Vote.TYPE.THUMB_UP) {
             logger.info("updatePositiveRating() call; FAILURE; User voted for this comment;" +
-                    "commentId = " + commentId + "userId = " + userId);
+                    "commentId = " + commentId + "; userId = " + userId + "; type = " + foundedVote.getType());
             return new ResponseEntity<>(httpHeaders(HEADER_KEY, USER_VOTED_COMMENT), FORBIDDEN);
         }
 
+        foundedVote.setType(Vote.TYPE.THUMB_UP);
+
+        comment.setNegativeRating(comment.getNegativeRating() - 1);
         comment.setPositiveRating(comment.getPositiveRating() + 1);
-        comment.getVotedUsers().add(user);
 
         Comment savedComment = commentRepository.save(comment);
-        logger.info("updatePositiveRating() call; SUCCESS");
+        logger.info("updatePositiveRating() call; SUCCESS; Changed vote");
         return new ResponseEntity<>(savedComment, OK);
     }
 
@@ -124,24 +145,42 @@ public class CommentService {
         if (!optionalComment.isPresent() || ! optionalUser.isPresent()) {
             logger.info("updateNegativeRating() call; FAILURE; comment or user not found;" +
                     "commentId = " + commentId + "userId = " + userId);
-            return new ResponseEntity<>(httpHeaders(HEADER_KEY, ENTITIES_NOT_FOUND), BAD_REQUEST);
+            return new ResponseEntity<>(httpHeaders(HEADER_KEY, ENTITIES_NOT_FOUND), NOT_FOUND);
         }
 
         Comment comment = optionalComment.get();
         User user = optionalUser.get();
 
-        if (comment.getVotedUsers().contains(user)) {
-            logger.info("updateNegativeRating() call; FAILURE; User voted for this comment;" +
-                    "commentId = " + commentId + "userId = " + userId);
+        Optional<Vote> vote = voteRepository.findByUserIdAndCommentId(userId, commentId);
+
+        if (!vote.isPresent()) {
+            Vote newVote = Vote.builder().user(user).comment(comment).type(Vote.TYPE.THUMB_DOWN).build();
+            voteRepository.save(newVote);
+
+            comment.getVotes().add(newVote);
+            comment.setNegativeRating(comment.getNegativeRating() + 1);
+            Comment savedComment = commentRepository.save(comment);
+
+            logger.info("updatePositiveRating() call; SUCCESS");
+            return new ResponseEntity<>(savedComment, OK);
+        }
+
+        Vote foundedVote = vote.get();
+
+        if (foundedVote.getType() == Vote.TYPE.THUMB_DOWN) {
+            logger.info("updatePositiveRating() call; FAILURE; User voted for this comment;" +
+                    "commentId = " + commentId + "; userId = " + userId + "; type = " + foundedVote.getType());
             return new ResponseEntity<>(httpHeaders(HEADER_KEY, USER_VOTED_COMMENT), FORBIDDEN);
         }
 
+        foundedVote.setType(Vote.TYPE.THUMB_DOWN);
+
         comment.setNegativeRating(comment.getNegativeRating() + 1);
-        comment.getVotedUsers().add(user);
+        comment.setPositiveRating(comment.getPositiveRating() - 1);
 
         Comment savedComment = commentRepository.save(comment);
-        logger.info("updateNegativeRating() call; SUCCESS");
+        logger.info("updatePositiveRating() call; SUCCESS; Changed vote");
         return new ResponseEntity<>(savedComment, OK);
-    }
+   }
 
 }
