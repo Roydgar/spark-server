@@ -127,6 +127,7 @@ public class CommentService {
         }
 
         foundedVote.setType(Vote.TYPE.THUMB_UP);
+        voteRepository.save(foundedVote);
 
         comment.setNegativeRating(comment.getNegativeRating() - 1);
         comment.setPositiveRating(comment.getPositiveRating() + 1);
@@ -174,6 +175,7 @@ public class CommentService {
         }
 
         foundedVote.setType(Vote.TYPE.THUMB_DOWN);
+        voteRepository.save(foundedVote);
 
         comment.setNegativeRating(comment.getNegativeRating() + 1);
         comment.setPositiveRating(comment.getPositiveRating() - 1);
