@@ -8,8 +8,8 @@ import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @ToString(exclude = "user")
+@AllArgsConstructor
 @Builder
 @Entity
 @Table(name = "car")
@@ -27,8 +27,8 @@ public class Car {
     private String model;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JoinColumn(name="user_id")
+    @JsonIgnore
     private User user;
 
 }

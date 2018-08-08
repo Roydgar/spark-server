@@ -75,6 +75,7 @@ public class UserService {
 
         user.setPassword(HashUtil.hash(user.getEmail().concat(user.getPassword())));
         user.setEmail(user.getEmail().toLowerCase());
+        user.getCars().forEach(car -> car.setUser(user));
         User savedUser = userRepository.save(user);
 
         smtpMailSender.send(user.getEmail(),
