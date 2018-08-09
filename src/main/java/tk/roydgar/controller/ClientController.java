@@ -22,4 +22,9 @@ public class ClientController {
         return clientService.findById(clientId);
     }
 
+    @GetMapping("/client/users/{clientId}")
+    public ResponseEntity<?> findUsersById(@PathVariable Long clientId) {
+        return clientService.findServedUsersByClientId(clientId);
+    }
+
 }

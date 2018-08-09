@@ -19,14 +19,14 @@ public class UserController {
         return userService.findById(userId);
     }
 
-    @PostMapping("user/login")
-    public ResponseEntity<?> login(@RequestBody LoginData loginData) {
-        return userService.login(loginData);
+    @PostMapping("user/login/{clientId}}")
+    public ResponseEntity<?> login(@RequestBody LoginData loginData, @PathVariable Long clientId) {
+        return userService.login(loginData, clientId);
     }
 
-    @PostMapping("user/register")
-    public ResponseEntity<?> register(@RequestBody User user) {
-        return userService.register(user);
+    @PostMapping("user/register/{clientId}")
+    public ResponseEntity<?> register(@RequestBody User user, @PathVariable Long clientId) {
+        return userService.register(user, clientId);
     }
 
     @GetMapping("user/confirmation/{userId}/{hash}")

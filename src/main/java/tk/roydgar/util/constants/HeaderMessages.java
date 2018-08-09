@@ -11,4 +11,10 @@ public interface HeaderMessages {
     String USER_NOT_FOUND     = "User not found";
     String EMAIL_CONFIRMATION_ERROR = "Email confirmation error. Incorrect hash or already confirmed";
     String ENTITIES_NOT_FOUND = "Entities not found. Parameters are incorrect";
+    String USER_NOT_SERVED_BY_THIS_CLIENT = "User is not served by this client.";
+
+    String ERROR = "Error";
+    String INTERNAL_ERROR = "Internal error. view logs";
+    String INVALID_ID = "Invalid id";
+
 }

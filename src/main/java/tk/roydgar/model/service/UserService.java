@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tk.roydgar.model.entity.client.Client;
 import tk.roydgar.model.entity.user.User;
 import tk.roydgar.model.entity.temporary.LoginData;
+import tk.roydgar.model.repository.ClientRepository;
 import tk.roydgar.model.repository.UserRepository;
 import tk.roydgar.util.HashUtil;
 import tk.roydgar.util.SmtpMailSender;
@@ -25,6 +27,7 @@ import static tk.roydgar.util.constants.HeaderMessages.*;
 public class UserService {
 
     private UserRepository userRepository;
+    private ClientRepository clientRepository;
     private SmtpMailSender smtpMailSender;
     private Logger logger;
 
@@ -34,7 +37,7 @@ public class UserService {
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public ResponseEntity<?> login(LoginData loginData) {
+    public ResponseEntity<?> login(LoginData loginData, Long clientId) {
         String email = loginData.getEmail().toLowerCase();
         String password = loginData.getPassword();
 
@@ -57,10 +60,18 @@ public class UserService {
                     httpHeaders(HEADER_KEY, USER_EMAIL_WASNT_CONFIRMED), UNAUTHORIZED);
         }
 
+        Optional<Client> client = clientRepository.findById(clientId);
+
+        if (!client.isPresent() || !loggedUser.getClients().contains(client.get())) {
+            return new ResponseEntity<>(
+                    httpHeaders(HEADER_KEY, USER_NOT_SERVED_BY_THIS_CLIENT), UNAUTHORIZED);
+        }
+
         if (HashUtil.check(email.concat(password), loggedUser.getPassword())) {
             logger.info("login() call; SUCCESS ; loginData = " + loginData +"; loggedUser = " + loggedUser);
             return new ResponseEntity<>(loggedUser, OK);
         }
+
 
         logger.info("login() call; FAILURE ; password is incorrect;" +
                 "loginData = " + loginData);
@@ -68,15 +79,25 @@ public class UserService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public ResponseEntity<?> register(User user) {
+    public ResponseEntity<?> register(User user, Long clientId) {
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
             return new ResponseEntity<>(httpHeaders(HEADER_KEY, USER_EXIST), CONFLICT);
+        }
+
+        Optional<Client> client = clientRepository.findById(clientId);
+
+        if (!client.isPresent()) {
+            return new ResponseEntity<>(httpHeaders(HEADER_KEY, ENTITIES_NOT_FOUND), NOT_FOUND);
         }
 
         user.setPassword(HashUtil.hash(user.getEmail().concat(user.getPassword())));
         user.setEmail(user.getEmail().toLowerCase());
         user.getCars().forEach(car -> car.setUser(user));
+        user.getClients().add(client.get());
         User savedUser = userRepository.save(user);
+
+        client.get().getUsers().add(savedUser);
+        clientRepository.save(client.get());
 
         smtpMailSender.send(user.getEmail(),
                 "Workshop Master: Email Confirmation"
