@@ -6,9 +6,9 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+@Getter @Setter
+@EqualsAndHashCode
 @NoArgsConstructor
-@ToString(exclude = "user")
 @AllArgsConstructor
 @Builder
 @Entity

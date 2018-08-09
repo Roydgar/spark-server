@@ -1,14 +1,17 @@
 package tk.roydgar.model.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import tk.roydgar.model.entity.client.Client;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
-@Data
-@ToString(exclude = "password")
+@Getter @Setter
+@EqualsAndHashCode
 @NoArgsConstructor @AllArgsConstructor
 @Builder
 @Entity
@@ -48,6 +51,11 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Car> cars;
+
+    @ManyToMany
+    @JoinTable
+    @JsonIgnore
+    private List<Client> clients = new ArrayList<>();
 
     public enum Status {
         GUEST, CONFIRMED

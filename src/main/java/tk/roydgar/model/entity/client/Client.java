@@ -6,16 +6,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import tk.roydgar.model.entity.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "password")
+@ToString(exclude = {"password", "users"})
 @Builder
 @Entity
 @Table(name = "client")
@@ -62,5 +64,9 @@ public class Client {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client", cascade = CascadeType.ALL)
     private List<MobileNumber> mobileNumbers;
+
+    @ManyToMany
+    private List<User> users = new ArrayList<>();
+
 
 }
